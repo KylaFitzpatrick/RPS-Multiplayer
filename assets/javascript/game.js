@@ -85,8 +85,9 @@ choiceWinner()
 //   * Your game will hide this amount until thre is a winner.
 //   * When they do click one, update the player choice is displayed.  
 
+function userOne(){
 // Create 6 number options 
-for (var i = 0; i < 6; i++) {
+for (var i = 0; i < 3; i++) {
 var randomChoice = Math.floor(Math.random()*options.length)
 
   // Add number options to button tag
@@ -94,13 +95,14 @@ var randomChoice = Math.floor(Math.random()*options.length)
 
   // Each rps will be given the class ".crps-image".
   imageRPS.addClass("rps-image");
+  imageRPS.attr("id", "user-one");
 
  // Each imageRPS will be given a src link to the rps image
- if(i === 0 || i === 3){ 
+ if(i === 0){ 
 imageRPS.attr("src", "assets/images/rock.png");
- } else if(i === 1 || i === 4){
+ } else if(i === 1){
     imageRPS.attr("src", "assets/images/paper.png");
-}else if (i === 2 || i === 5) {
+}else if (i === 2) {
     imageRPS.attr("src", "assets/images/scissors.png");
 }
 
@@ -111,7 +113,41 @@ imageRPS.attr("src", "assets/images/rock.png");
   // Lastly, each rps image (with all it classes and attributes) will get added to the page.
   $("#images").append(imageRPS);
 
-}  
+} 
+} 
+userOne();
+
+function userTwo(){
+  // Create 6 number options 
+for (var i = 0; i < 3; i++) {
+  var randomChoice = Math.floor(Math.random()*options.length)
+  
+    // Add number options to button tag
+    var imageRPS = $("<img>");
+  
+    // Each rps will be given the class ".crps-image".
+    imageRPS.addClass("rps-image");
+    imageRPS.attr("id", "user-two");
+  
+   // Each imageRPS will be given a src link to the rps image
+   if(i === 0){ 
+  imageRPS.attr("src", "assets/images/rock.png");
+   } else if(i === 1){
+      imageRPS.attr("src", "assets/images/paper.png");
+  }else if (i === 2) {
+      imageRPS.attr("src", "assets/images/scissors.png");
+  }
+  
+  
+    // Each imageRPS will be given a data attribute called rps value.
+    imageRPS.attr("rps-value", randomChoice);
+  
+    // Lastly, each rps image (with all it classes and attributes) will get added to the page.
+    $("#images").append(imageRPS);
+  
+  } 
+}
+userTwo();
    // This time, our click event applies to every single rps on the page. Not just one.
   $(".rps-image").on("click", function() {
 
