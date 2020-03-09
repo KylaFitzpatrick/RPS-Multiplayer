@@ -3,21 +3,30 @@ var randomNumbers = Math.floor(Math.random() * (120 - 19 + 1)) + 19;
 var wins = 0;
 var losses = 0;
 var totalScore = [];
-// // Randomly chooses a choice from the options array.
+// Randomly chooses a choice from the options array.
 var randomNumber = [];
 var guessedNumber = 0;
 
 resetGame();
 
 // * The player will be shown a random number at the start of the game.
-//   * When the game begins again, the player should see a new random number. Also, all the crystals will have four new hidden values. Of course, the user's score (and score counter) will reset to zero.
+//   * When the game begins again, the player should wait for another player to join. Of course, the user's score (and score counter) will reset to zero.
 // * The app should show the number of games the player wins and loses. To that end, do not refresh the page as a means to restart the game.
+// if user 1 choose rock and user 2 chooses paper user 2 wins
+// if user 1 choose rock and user 2 chooses rock user tie
+// if user 1 choose rock and user 2 chooses paper user 1 wins
+// if user 1 choose scissor and user 2 chooses paper user 1 wins 
+//if user 1 choose scissor and user 2 chooses rock user 2 wins
+// if user 1 chooses scissor and user 2 chooses scissor tie
+// if user 1 chooses paper and user 2 chooses scissor user 2 wins
+// if user 1 chooses paper and user 2 chooses rock user 1 wins
+//if user 1 chooses paper and user 2 chooses paper tie 
 function resetGame() {
     $("#wins-text").text(wins);
     $("#losses-text").text(losses);
     $("#score-number").text("0");
-    randomNumber = Math.floor(Math.random() * (120 - 19 + 1)) + 19;
-    $("#random-number").text(randomNumber);
+    // randomNumber = Math.floor(Math.random() * (120 - 19 + 1)) + 19;
+    // $("#random-number").text(randomNumber);
     console.log("Number to guess: " + randomNumber);
 } 
 

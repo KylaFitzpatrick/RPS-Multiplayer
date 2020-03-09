@@ -2,6 +2,8 @@ body{
     font-family: 'Chicle', cursive; 
     background-image: linear-gradient(to right, green,blue,indigo);
     font-size: 40px;
+    color: white;
+
 }
 /* button{
     font-family: 'Chicle', cursive;
