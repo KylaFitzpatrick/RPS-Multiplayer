@@ -1,14 +1,15 @@
 $(document).ready(function() {
 
  
-  var myConfig = 
-    config.apiKey;
-    config.authDomain;
-    config.databaseURL;
-    config.projectId;
-    config.storageBucket;
-    config.messagingSenderId;
-    config.appId;
+  var myConfig = {
+    apiKey: config.apiKey,
+    authDomain: config.authDomain,
+    databaseURL: config.databaseURL,
+    projectId: config.projectId,
+    storageBucket: config.storageBucket,
+    messagingSenderId: config.messagingSenderId,
+    appId: config.appId
+  }
   
     // Initialize Firebase
     firebase.initializeApp(myConfig);
