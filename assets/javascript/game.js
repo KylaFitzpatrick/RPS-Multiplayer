@@ -20,10 +20,6 @@ $(document).ready(function() {
     var userTwoWins = "";
     var userOneLosses = "";
     var userTwoLosses = "";
-    var role = "";
-    var date = "";
-    var monthlyRate = "";
-    var presentDate = moment();
     console.log("is this working");
     // Capture Button Click
     $("#rps-image").on("click", function(event) {
