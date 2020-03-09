@@ -27,7 +27,7 @@ function resetGame() {
 //   * When they do click one, update the player's score counter.  
 
 // Create 4 number options 
-for (var i = 0; i < 4; i++) {
+for (var i = 0; i < 3; i++) {
 var numberOptions = Math.floor(Math.random() * 12) + 1;
 
   // Add number options to button tag
@@ -38,13 +38,11 @@ var numberOptions = Math.floor(Math.random() * 12) + 1;
 
  // Each imageCrystal will be given a src link to the crystal image
  if(i === 0){ 
-imageCrystal.attr("src", "assets/images/amethyst.jpg");
+imageCrystal.attr("src", "assets/images/rock.png");
  } else if(i === 1){
-    imageCrystal.attr("src", "assets/images/druze.jpg");
-}else if(i === 2) {
-    imageCrystal.attr("src", "assets/images/fluorite.jpg");
-}else{
-    imageCrystal.attr("src", "assets/images/rock-crystal.jpg");
+    imageCrystal.attr("src", "assets/images/paper.png");
+}else if (i === 2) {
+    imageCrystal.attr("src", "assets/images/scissors.png");
 }
 
 

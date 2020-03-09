@@ -1,9 +1,9 @@
 body{
     font-family: 'Chicle', cursive; 
-    background-color:lightskyblue;
+    background-image: linear-gradient(to right, green,blue,indigo);
     font-size: 40px;
 }
-button{
+/* button{
     font-family: 'Chicle', cursive;
     font-size: 50px;
     color: purple;
@@ -17,42 +17,74 @@ button:hover{
     color: blue;
     margin: 10px;
     border-color:purple;
-}
-/* #add-animal{
-    font-size: 50px;
 } */
-h1{
+
+#rps{
     font-family: 'Monoton', cursive;
     font-size: 100px;
-    background: -webkit-linear-gradient(purple,blue);
+    background: -webkit-linear-gradient(rgb(252, 105, 215),yellow);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+#rps-image{
+    width: 50%;
+    height: 50%;
 }
 label{
     color: blue;
 }
-#animal-form{
-    font-size: 50px;
+
+.container{
+    margin: 0 auto;
+    float: center;
+    justify-content: center;
+    text-align: center;
 }
-/* #animal-input{
+h1{
     font-size: 50px;
+    /* color:purple; */
 }
-#add-animal{
+h3{
+    padding: 20px;
     font-size: 50px;
-} */
-input[type="text"]{
+    display: inline;
+    /* color: purple; */
+}
+#game-description p{
+    text-align: left;
+    font-size: 40px;
+    padding: 20px;
+    /* color: purple; */
+}
+
+#game-section h3{
     font-family: 'Chicle', cursive;
-    color: blue;
-    border-color: purple;
-    border-width: 3px;
-    -webkit-text-fill-color:blue;
+    font-size: 50px;
+    
 }
-/* #gifs-appear-here p{
-    font-weight: 20px;
-    color: blue;
+.container #game-stats {
+    float: center;
+    padding: 10px;
+    /* text-align: left; */
+
 }
-#animalGifs{
-    margin: 10px;
-    /* margin: 5px Auto; */
-    display: inline-block;
+#images{
+    display: inline;
+    /* width: 30px;
+    height: 30px; */
+}
+/* button{
+    background-color: black;
+    width: 100px;
+    height: 100px;
 } */
+img{
+    width: 100px;
+    height: 100px;
+    padding:10px;
+}
+img:hover {
+    color:white;
+    border-style: solid;
+    border-width: 1px;
+}
