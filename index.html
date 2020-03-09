@@ -25,12 +25,6 @@
             <div class="container">
                 <div id="game-description">
                     <button id="start-button" class="hideButton">Start!</button>
-                    <!-- <p>There will be four crystals displayed each with a hidden value.
-                       A random number will display at the start of the game and you mission is to click the correct crytals that equals that value.
-                        After clicking on a crystal, it will add a specific amount of points to the total score.
-                        You wins if your total score matches the random number from the beginning of the game.
-                        You lose if your score goes above the random number.
-                        The game restarts if you win or lose.</p> -->
                 </div>
                 <div id="game-stats">
                     <h3 id="random-number"></h3>
@@ -45,8 +39,14 @@
                         <h3 id="losses-text"></h3>
                         <br>
                     </div>
+                    <div id="user-choice">
+                    <h3 id="user-one"> User 1</h3>
+                    <br>
+                    <h3 id="user-two">User 2</h3>
+                    <br>
                     <div id="images" class="bordershadow">
                     </div>
+                </div>
                     <div id="total-score">
                     <h3 id="score-text">Total Score:</h3>
                     <h3 id="score-number"></h3>
@@ -62,5 +62,6 @@
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous"></script>
+      <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 </body>
 </html>

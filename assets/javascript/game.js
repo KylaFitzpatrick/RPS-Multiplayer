@@ -1,11 +1,73 @@
 $(document).ready(function() {
 
-var percentageWins = (playerWins / (computerWins + playerWins + draws)) * 100;
+ 
+// firebase config
+    var firebaseConfig = {
+      apiKey: "AIzaSyBakGw7jL2XD2I38YcZAlOHsuM2dsSz46A",
+      authDomain: "rps-game-cba9d.firebaseapp.com",
+      databaseURL: "https://rps-game-cba9d.firebaseio.com",
+      projectId: "rps-game-cba9d",
+      storageBucket: "rps-game-cba9d.appspot.com",
+      messagingSenderId: "99583826642",
+      appId: "1:99583826642:web:7d8f5822e18fdbab62ab0b"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var database = firebase.database();
+    // Initial Values
 
-var computerWins = 0;
-var playerWins = 0;
+    var userOneWins = "";
+    var userTwoWins = "";
+    var userOneLosses = "";
+    var userTwoLosses = "";
+    var role = "";
+    var date = "";
+    var monthlyRate = "";
+    var presentDate = moment();
+    console.log("is this working");
+    // Capture Button Click
+    $("#rps-image").on("click", function(event) {
+        event.preventDefault();
+    //     name = $("#name-input").val().trim();
+    //     role = $("#role-input").val().trim();
+    //     date = $("#date-input").val().trim();
+    //     monthlyRate = $("#monthlyRate-input").val().trim();
+    //     database.ref().push({
+    //         name: name,
+    //         role: role,
+    //         date: date,
+    //         monthlyRate: monthlyRate,
+    //         dateAdded: firebase.database.ServerValue.TIMESTAMP
+    //     });
+    // });
+    database.ref().on("child_added", function(snapshot){
+        userOneWins = snapshot.val().userOneWins;
+        userTwoWins = snapshot.val().userTwoWins;
+        userOneLosses = snapshot.val().userOneLosses;
+        userTwoLosses = snapshot.val().userTwoLosses ;
+        $("thead").append(`
+        <tr>
+            <td>${name}</td>
+            <td>${role}</td>
+            <td>${date}</td>
+            <td>${monthsWorked}</td>
+            <td>${monthlyRate}</td>
+            <td>${totalBilled}</td>
+        </tr>
+        `)
+    }, function(errorObject) {
+        console.log("Errors handled: " + errorObject.code);
+    }) 
+
+var userTwoWins = (userTwoWins / (userTwoWins + userOneWins + draws)) * 100;
+var userOneWins = (userTwoWins / (userTwoWins + userOneWins + draws)) * 100;
+var userTwoLosses = (userTwoLosses / (userTwoWins + userOneWins + draws)) * 100;
+var userOneLosses = (userOneLosses / (userTwoWins + userOneWins + draws)) * 100;
+// var userTwo = 0;
+// var userOne = 0;
 var draws = 0;
-var wins = 0;
+var userTwoWins = 0;
+var userOneWins = 0;
 var losses = 0;
 var totalScore = [];
 // Randomly chooses a choice from the options array.
@@ -60,7 +122,7 @@ function choiceWinner(){
   else if (playerChoice == "rock" && computerChoice == "paper" || playerChoice == "scissors" && computerChoice == "rock" || playerChoice == "paper" && computerChoice == "scissors") {
   	//display user 2 wins
   	$("#message").html("You selected " + playerChoice + " and the computer selected " + computerChoice + ". You lost. <br />")  	
-    computerWins++;
+    userTwoWins++;
   }
 
  // if user 1 choose rock and user 2 chooses paper user 1 wins
@@ -69,7 +131,7 @@ function choiceWinner(){
   else if (playerChoice == "rock" && computerChoice == "scissors" || playerChoice == "scissors" && computerChoice == "paper" || playerChoice == "paper" && computerChoice == "rock") {
   	//display user 1 wins
     $("#message").html("You selected " + playerChoice + " and the computer selected " + computerChoice + ". You won. <br />") 
-    playerWins++;
+    userOneWins++;
   } 
   //alert select rps
   else {
@@ -86,7 +148,7 @@ choiceWinner()
 //   * When they do click one, update the player choice is displayed.  
 
 function userOne(){
-// Create 6 number options 
+// Create 3 number options 
 for (var i = 0; i < 3; i++) {
 var randomChoice = Math.floor(Math.random()*options.length)
 
@@ -95,7 +157,7 @@ var randomChoice = Math.floor(Math.random()*options.length)
 
   // Each rps will be given the class ".crps-image".
   imageRPS.addClass("rps-image");
-  imageRPS.attr("id", "user-one");
+  // imageRPS.attr("id", "user-one");
 
  // Each imageRPS will be given a src link to the rps image
  if(i === 0){ 
@@ -111,14 +173,17 @@ imageRPS.attr("src", "assets/images/rock.png");
   imageRPS.attr("rps-value", randomChoice);
 
   // Lastly, each rps image (with all it classes and attributes) will get added to the page.
-  $("#images").append(imageRPS);
+  // $("#images").append(imageRPS);
+  $("#user-one").append(imageRPS);
 
 } 
 } 
 userOne();
 
 function userTwo(){
-  // Create 6 number options 
+  // Create 3 options 
+  // var userTwo = "<p>" + "User 1" + "<p>"
+  // userTwo;
 for (var i = 0; i < 3; i++) {
   var randomChoice = Math.floor(Math.random()*options.length)
   
@@ -127,7 +192,7 @@ for (var i = 0; i < 3; i++) {
   
     // Each rps will be given the class ".crps-image".
     imageRPS.addClass("rps-image");
-    imageRPS.attr("id", "user-two");
+    // imageRPS.attr("id", "user-two");
   
    // Each imageRPS will be given a src link to the rps image
    if(i === 0){ 
@@ -143,7 +208,8 @@ for (var i = 0; i < 3; i++) {
     imageRPS.attr("rps-value", randomChoice);
   
     // Lastly, each rps image (with all it classes and attributes) will get added to the page.
-    $("#images").append(imageRPS);
+    // $("#images").append(imageRPS);
+    $("#user-two").append(imageRPS);
   
   } 
 }
