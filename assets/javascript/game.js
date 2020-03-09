@@ -1,18 +1,17 @@
 $(document).ready(function() {
 
  
-// firebase config
-    var firebaseConfig = {
-      apiKey: "AIzaSyBakGw7jL2XD2I38YcZAlOHsuM2dsSz46A",
-      authDomain: "rps-game-cba9d.firebaseapp.com",
-      databaseURL: "https://rps-game-cba9d.firebaseio.com",
-      projectId: "rps-game-cba9d",
-      storageBucket: "rps-game-cba9d.appspot.com",
-      messagingSenderId: "99583826642",
-      appId: "1:99583826642:web:7d8f5822e18fdbab62ab0b"
-    };
+  var myConfig = 
+    config.apiKey;
+    config.authDomain;
+    config.databaseURL;
+    config.projectId;
+    config.storageBucket;
+    config.messagingSenderId;
+    config.appId;
+  
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(myConfig);
     var database = firebase.database();
     // Initial Values
 
@@ -35,7 +34,7 @@ $(document).ready(function() {
     //         monthlyRate: monthlyRate,
     //         dateAdded: firebase.database.ServerValue.TIMESTAMP
     //     });
-    // });
+    });
     database.ref().on("child_added", function(snapshot){
         userOneWins = snapshot.val().userOneWins;
         userTwoWins = snapshot.val().userTwoWins;
