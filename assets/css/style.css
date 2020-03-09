@@ -5,6 +5,15 @@ body{
     color: white;
 
 }
+#start-button{
+    text-align: center;
+    font-size: 50px;
+    background-color:red;
+    border-width: 3px;
+    border-color: black;
+    display: "none";
+
+}
 /* button{
     font-family: 'Chicle', cursive;
     font-size: 50px;
