@@ -1,0 +1,58 @@
+body{
+    font-family: 'Chicle', cursive; 
+    background-color:lightskyblue;
+    font-size: 40px;
+}
+button{
+    font-family: 'Chicle', cursive;
+    font-size: 50px;
+    color: purple;
+    margin: 10px;
+    border-color: blue;
+    border-width: 3px;
+}
+button:hover{
+    font-family: 'Chicle', cursive;
+    font-size: 50px;
+    color: blue;
+    margin: 10px;
+    border-color:purple;
+}
+/* #add-animal{
+    font-size: 50px;
+} */
+h1{
+    font-family: 'Monoton', cursive;
+    font-size: 100px;
+    background: -webkit-linear-gradient(purple,blue);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+label{
+    color: blue;
+}
+#animal-form{
+    font-size: 50px;
+}
+/* #animal-input{
+    font-size: 50px;
+}
+#add-animal{
+    font-size: 50px;
+} */
+input[type="text"]{
+    font-family: 'Chicle', cursive;
+    color: blue;
+    border-color: purple;
+    border-width: 3px;
+    -webkit-text-fill-color:blue;
+}
+/* #gifs-appear-here p{
+    font-weight: 20px;
+    color: blue;
+}
+#animalGifs{
+    margin: 10px;
+    /* margin: 5px Auto; */
+    display: inline-block;
+} */
