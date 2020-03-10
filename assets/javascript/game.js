@@ -75,10 +75,10 @@ var userTwoWins = 0;
 var userTwoWins_span = $("#user-two-wins");
 var userOneWins = 0;
 var userOneWins_span = $("#user-one-wins");
-var userTwoLosses = 0;
-var userTwoLosses_span = $("#user-two-losses");
-var userOneLosses = 0;
-var userOneLosses_span = $("#user-one-losses");
+var userTwoLoses = 0;
+var userTwoLoses_span = $("#user-two-losses");
+var userOneLoses = 0;
+var userOneLoses_span = $("#user-one-losses");
 var scoreBoard_div = $("#score-board");
 var result_p = $(".result > p");
 var oneRock_div = $("#one-r")
@@ -88,19 +88,30 @@ var twoRock_div = $("#two-r")
 var twoPaper_div = $("#two-p")
 var twoScissors_div = $("#two-s")
 
+function translateToWord(letter){
+  if(letter === "r1" || letter === "r2") return "Rock";
+  if(letter === "p1" || letter === "p2") return "Paper";
+  if(letter === "s1" || letter === "s2") return "Scissors";
+}
+
 function win(userChoice, userTwoChoice){
  userOneWins++;
  userOneWins_span.html(userOneWins)
- userTwoWins_span.html(userTwoWins)
- result_p.html(userChoice + " beats " + userTwoChoice + "You Win!");
+ userTwoLoses_span.html(userTwoLoses)
+ result_p.html(`${translateToWord(userChoice)} beats ${translateToWord(userTwoChoice)}. You Win!`);
 }
 
 function lose(){
-  
+  userTwoWins++;
+ userOneLoses_span.html(userOneLoses)
+ userTwoWins_span.html(userTwoWins)
+ result_p.html(`${translateToWord(userChoice)} loses to ${translateToWord(userTwoChoice)}. You Lose!`);
 }
 
+
 function tie(){
-  
+  result_p.html(`${translateToWord(userChoice)} ties with ${translateToWord(userTwoChoice)}. It's a tie!`);
+
 }
 function getUserTwoChoices(){
   var choices = ["r2", "p2", "s2"]
