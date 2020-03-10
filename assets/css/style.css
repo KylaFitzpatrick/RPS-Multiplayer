@@ -1,3 +1,8 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;  
+}
 body{
     font-family: 'Chicle', cursive; 
     background-image: linear-gradient(to right, green,blue,indigo);
@@ -16,6 +21,16 @@ body{
 }
 #user-choice{
     display: inline-block;
+}
+.score-board{
+    margin: 20px auto;
+    border: 3px solid white;
+    border-radius: 4px;
+    text-align: center;
+    width: 200px;
+    color: white;
+    font-size: 46px;
+    padding: 15px 20px;
 }
 /* button{
     font-family: 'Chicle', cursive;
