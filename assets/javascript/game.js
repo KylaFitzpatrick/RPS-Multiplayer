@@ -15,7 +15,8 @@ $(document).ready(function() {
     firebase.initializeApp(myConfig);
     var database = firebase.database();
     // Initial Values
-
+    var userOneChoice = "";
+    var userTwoChoice = "";
     var userOneWins = "";
     var userTwoWins = "";
     var userOneLosses = "";
@@ -24,35 +25,41 @@ $(document).ready(function() {
     // Capture Button Click
     $("#rps-image").on("click", function(event) {
         event.preventDefault();
-    //     userOne = $("#user-one").val().trim();
-    //     userTwo = $("#user-two").val().trim();
-    //     userOneScore = $("#user-one-score").val().trim();
-    //     userTwoScore = $("#user-two-score").val().trim();
-    //     date = $("#date-input").val().trim();
-    //     monthlyRate = $("#monthlyRate-input").val().trim();
-    //     database.ref().push({
-    //         userOne: userOne,
-    //         userTwo: userTwo,
-    //         userOneScore: userOneScore,
-    //         userTwoScore: userTwoScore,
-    //         dateAdded: firebase.database.ServerValue.TIMESTAMP
-    //     });
+        userOneChoice = $("#user-one-choice").val().trim();
+        userTwoChoice = $("#user-two-choice").val().trim();
+        userOneWins = $("#user-one-wins").val().trim();
+        userTwoWins = $("#user-two-wins").val().trim();
+        userOneLosses = $("#user-one-losses").val().trim();
+        userTwoLosses = $("#user-two-losses").val().trim();
+        database.ref().push({
+            userOneChoice: userOneChoice,
+            userTwoChoice: userTwoChoice,
+            userOneWins: userOneWins,
+            userTwoWins: userTwoWins,
+            userOneLosses: userOneLosses,
+            userTwoLosses: userTwoLosses,
+            dateAdded: firebase.database.ServerValue.TIMESTAMP
+        });
     });
     database.ref().on("child_added", function(snapshot){
+        userOneChoice = snapshot.val().userOneChoice,
+        userTwoChoice = snapshot.val().userTwoChoice,
         userOneWins = snapshot.val().userOneWins;
         userTwoWins = snapshot.val().userTwoWins;
         userOneLosses = snapshot.val().userOneLosses;
-        userTwoLosses = snapshot.val().userTwoLosses ;
-        $("thead").append(`
-        <tr>
-            <td>${name}</td>
-            <td>${role}</td>
-            <td>${date}</td>
-            <td>${monthsWorked}</td>
-            <td>${monthlyRate}</td>
-            <td>${totalBilled}</td>
-        </tr>
-        `)
+        userTwoLosses = snapshot.val().userTwoLosses;
+        $("#user-one-choice").append(`
+            <div>${userOneChoice}</div>`)
+        $("#user-two-choice").append(`
+            <div>${userTwoChoice}</div>`)
+        $("#user-one-wins").append(`
+            <div>${userOneWins}</div>`)  
+        $("#user-two-wins").append(`
+            <div>${userTwoWins}</div>`) 
+        $("#user-one-losses").append(`
+            <div>${userOneLosses}</div>`)  
+        $("#user-two-losses").append(`
+            <div>${userTwoLosses}</div>`)    
     }, function(errorObject) {
         console.log("Errors handled: " + errorObject.code);
     }) 
