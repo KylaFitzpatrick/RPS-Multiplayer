@@ -27,20 +27,36 @@
                     <button id="start-button" class="hideButton">Start!</button>
                 </div>
                 <div id="score-board">
-                    <div id="user-one-label">User 1</div>
-                    <div id="user-two-label">User 2</div>
+                    <div id="user-one-label" class="label">User 1</div>
+                    <div id="user-two-label" class="label">User 2</div>
+                    <div id="wins-label">Wins</div>
                     <span id="user-one-wins">0</span>:<span id="user-two-wins">0</span>
+                    <br>
+                    <div id="losses-label">Losses</div>
                     <span id="user-one-loss">0</span>:<span id="user-two-loss">0</span>
-                    </div>
+                </div>
+
+                <div class="result">
+                    <p>Scissors cuts paper</p>
+                </div>
                     <div id="users-choice">
-                        <h3 id="user-one-label">User 1</h3>
+                        <div id="user-one-choice" class="user-choice">User 1</div>
                         <br>
-                        <div id="user-one-choice"></div>
-                        <h3 id="user-two-label">User 2</h3>
+                        <div id="user-one-choices">
+                            <div class="choice" id="one-r"></div>
+                            <div class="choice" id="one-p"></div>
+                            <div class="choice" id="one-s"></div>
+                        </div>
+                        <div id="user-two-choice" class="user-choice">User 2</div>
                         <br>
-                        <div id="user-two-choice"></div>
+                        <div id="user-two-choices">
+                            <div class="choice" id="two-r"></div>
+                            <div class="choice" id="two-p"></div>
+                            <div class="choice" id="two-s"></div>
+                        </div>
                         <div id="images" class="bordershadow"></div>
                     </div>
+                    <p id="choice-message">It's your turn!</p>
                 </div>
             </div>
         </section>
