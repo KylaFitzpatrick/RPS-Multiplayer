@@ -24,15 +24,17 @@ $(document).ready(function() {
     // Capture Button Click
     $("#rps-image").on("click", function(event) {
         event.preventDefault();
-    //     name = $("#name-input").val().trim();
-    //     role = $("#role-input").val().trim();
+    //     userOne = $("#user-one").val().trim();
+    //     userTwo = $("#user-two").val().trim();
+    //     userOneScore = $("#user-one-score").val().trim();
+    //     userTwoScore = $("#user-two-score").val().trim();
     //     date = $("#date-input").val().trim();
     //     monthlyRate = $("#monthlyRate-input").val().trim();
     //     database.ref().push({
-    //         name: name,
-    //         role: role,
-    //         date: date,
-    //         monthlyRate: monthlyRate,
+    //         userOne: userOne,
+    //         userTwo: userTwo,
+    //         userOneScore: userOneScore,
+    //         userTwoScore: userTwoScore,
     //         dateAdded: firebase.database.ServerValue.TIMESTAMP
     //     });
     });
