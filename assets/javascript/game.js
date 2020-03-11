@@ -1,8 +1,8 @@
 $(document).ready(function() {
   var player1 = true;
   var player2 = true;
-  var player1Input = $("#player-1-inp");
-  var player2Input = $("#player-2-inp");
+  // var player1Input = $("#player-1-inp");
+  // var player2Input = $("#player-2-inp");
   var player1Name = $("user-one-label");
   var player2Name = $("user-two-label");
   var player1Choice = $("user-one-choice");
@@ -31,17 +31,13 @@ $(document).ready(function() {
 
 //   //send to user1
 
-        //   if(wins === 3){
-        //     resetGame();
-        // }
-
-        // player1Name = $("#player-1-inp").val();
-        // player2Name = $("#player-2-inp").val();
-
-        // if(player1Name=="" || player2Name==""){
-        //     alert("Please set player all the names.");
-        //     return;
-        // }
+        if(player1Name !== ""){
+          $("#waiting-player").text("Waiting for Player 2 to join...")
+          // player1Name.val()
+          // player1Input.clear()
+        }else if(player1Name !== "" && player2Name !== ""){
+          $("#waiting-player").text("Start game! Ro Sham Bo...")
+        }
 
         // setTurn();
 
@@ -92,17 +88,17 @@ $(document).ready(function() {
     });
     $("#start-button").on("click", function(event) {
       event.preventDefault();
-      player1Input = $("#player-1-inp").val().trim();
-      player2Input = $("#player-2-inp").val().trim();
+      nameInput = $("#name-input").val().trim();
 
     database.ref().push({
-        player1Input: player1Input,
-        player2Input: player2Input,
+        nameInput: nameInput,
+        // player2Input: player2Input,
   });
 });
     database.ref().on("child_added", function(snapshot){
-        player1Input = snapshot.val().player1Input,
-        player2Input = snapshot.val().player2Input,
+      nameInput = snapshot.val().userOneChoice,
+        // player1Input = snapshot.val().player1Input,
+        // player2Input = snapshot.val().player2Input,
         userOneChoice = snapshot.val().userOneChoice,
         userTwoChoice = snapshot.val().userTwoChoice,
         userOneWins = snapshot.val().userOneWins;
@@ -110,7 +106,7 @@ $(document).ready(function() {
         userOneLosses = snapshot.val().userOneLosses;
         userTwoLosses = snapshot.val().userTwoLosses;
         $("#user-one-label").append(`
-        <div>${player1Input}</div>`)
+        <div>${nameInput}</div>`)
         $("#user-two-label").append(`
         <div >${player2Input}</div>`)
         $("#user-one-choice").append(`
