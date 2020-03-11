@@ -134,14 +134,8 @@ var twoRock_div = $("#two-r")
 var twoPaper_div = $("#two-p")
 var twoScissors_div = $("#two-s")
 
-// $("#start-button").on("click", function (){
-//    alert("Clicked");
-//   // $(".hideButton").hide()
-//   //send to database
-//   //send to user1
+resetGame();
 
-//     startGame()    
-// });
 function translateToWord(letter){
   if(letter === "r1" || letter === "r2") return "Rock";
   if(letter === "p1" || letter === "p2") return "Paper";
@@ -230,10 +224,14 @@ main();
 
 
 function resetGame() {
-  $("#wins-text").text(wins);
-  $("#losses-text").text(losses);
-  $("#score-rps").text("0");
-  console.log("Number to guess: " + randomRPS);
+  //resetgame if tie or player losses
+ if(userTwoWins >= 3 || userOneWins >= 3){
+  $("#user-one-wins").text("0");
+  $("#user-two-wins").text("0");
+  $("#user-one-loses").text("0");
+  $("#user-two-loses").text("0");
+ }
+  console.log(" game is reset");
 } 
 
 
@@ -259,24 +257,13 @@ $("#one-p").append(imageRPS.attr("src", "assets/images/paper.png"));
   $("#one-s").append(imageRPS.attr("src", "assets/images/scissors.png"));
 }
 
-
-  // Each imageRPS will be given a data attribute called rps value.
-  // imageRPS.attr("rps-value", randomChoice);
-
-  // Lastly, each rps image (with all it classes and attributes) will get added to the page.
-  // $("#images").append(imageRPS);
-  // $("#user-one").append(imageRPS);
-
 } 
 } 
 userOne();
 
 function userTwo(){
-  // Create 3 options 
-  // var userTwo = "<p>" + "User 1" + "<p>"
-  // userTwo;
+  
 for (var i = 0; i < 3; i++) {
-  // var randomChoice = Math.floor(Math.random()*options.length)
   
     // Add number options to button tag
     var imageRPS = $("<img>");
@@ -294,46 +281,7 @@ for (var i = 0; i < 3; i++) {
     $("#two-s").append(imageRPS.attr("src", "assets/images/scissors.png"));
   }
   
-  
-    // Each imageRPS will be given a data attribute called rps value.
-    // imageRPS.attr("rps-value", randomChoice);
-  
-    // Lastly, each rps image (with all it classes and attributes) will get added to the page.
-    // $("#images").append(imageRPS);
-    // $("#user-two").append(imageRPS);
-  
   } 
 }
 userTwo();
-   // This time, our click event applies to every single rps on the page. Not just one.
-  $(".rps-image").on("click", function() {
-
-   
-    //extracting value of the clicked rps
-    var rpsValue = ($(this).attr("rps-value"));
-    // Every click, from every rps adds to the guessesRPS counter.
-    guessedRPS += rpsValue;
-    //dipslay the guessed number
-    $("#score-rps").text(guessedRPS);
-    console.log(guessedRPS);
-
-    if (wins > 3){
-        $('#wins').text(wins);
-        $('#message').html("You won!!")
-        // alert("You win!");
-        resetGame(); 
-   
-    // // * The player loses if other play wins 3 times.
-    }else if (guessedNumber > randomNumber){
-        losses ++;
-        $('#losses').text(losses);
-        $('#message').html("You lost. Try again!!")
-        // alert("You lose!!");
-        resetGame();
-    }
- //resetgame if tie or player losses
-        if(guessedRPS === randomRPS || losses > 0){
-            resetGame();
-        }
-    });
-  });
+});
