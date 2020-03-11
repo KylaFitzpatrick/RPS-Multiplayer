@@ -150,7 +150,7 @@ function win(userChoice, userTwoChoice){
  result_p.html(`${translateToWord(userChoice)} beats ${translateToWord(userTwoChoice)}. You Win!`);
 }
 
-function lose(){
+function lose(userChoice, userTwoChoice){
   userTwoWins++;
   userOneLoses++;
  userOneLoses_span.html(userOneLoses)
@@ -159,19 +159,33 @@ function lose(){
 }
 
 
-function tie(){
+function tie(userChoice, userTwoChoice){
   result_p.html(`${translateToWord(userChoice)} ties with ${translateToWord(userTwoChoice)}. It's a tie!`);
 
 }
 function getUserTwoChoices(){
-  var choices = ["r2", "p2", "s2"]
-  var randomNumber = Math.floor(Math.random() * 3);
-  return choices[randomNumber];
+  // var choices = ["r2", "p2", "s2"]
+  // var randomNumber = Math.floor(Math.random() * 3);
+  // return choices[""];
+  twoRock_div.on("click", function(){
+    game("r2");
+  })
+  
+  twoPaper_div.on("click", function(){
+    game("p2");
+  })
+  
+  twoScissors_div.on("click", function(){
+    game("s2");
+  })
 }
-// console.log(getUserTwoChoices());
+getUserTwoChoices();
+// console.log(getUserTwoChoices()); 
 
-function game(userChoice){
+function game(){
   var userTwoChoice = getUserTwoChoices();
+  var userChoice = getUserOneChoices();
+  
   switch(userChoice + userTwoChoice){
     case "r1s2":
     case "p1r2":
@@ -194,8 +208,11 @@ function game(userChoice){
   }
 }
 
+// var userTwoChoice = "r2"; "p2"; "s2"
+// var userChoice = "r1"; "p1"; "s1"
 
-function main(){
+function getUserOneChoices(){
+ 
 
 oneRock_div.on("click", function(){
   game("r1");
@@ -209,19 +226,19 @@ oneScissors_div.on("click", function(){
   game("s1");
 })
 
-twoRock_div.on("click", function(){
-  game("r2");
-})
+// twoRock_div.on("click", function(){
+//   game("r2");
+// })
 
-twoPaper_div.on("click", function(){
-  game("p2");
-})
+// twoPaper_div.on("click", function(){
+//   game("p2");
+// })
 
-twoScissors_div.on("click", function(){
-  game("s2");
-})
+// twoScissors_div.on("click", function(){
+//   game("s2");
+// })
 }
-main();
+getUserOneChoices();
 
 
 
@@ -284,4 +301,25 @@ for (var i = 0; i < 3; i++) {
   } 
 }
 userTwo();
+
+// function loadNewMessages() {
+//   // Loads new messages from retrieve_new.php file into new_posts div
+//    $('#new_posts').load("retrieve_new.php");
+
+//    // Determines whether or not there is a new message by searching new_posts div
+//     if ($("#new_posts").html != "") {
+
+//     // If nothing exists it won't do anything but if there is it will post this:
+//      $('#chatbox').prepend("" + $("#new_posts").html + "");
+
+//     // This makes it fade in. Not necessary but cool.
+//      $("#new_message").fadeIn(1000);
+
+//     // Empties the div for future posts.
+//      $("#actions").html("");
+//    }
+// }
+// // Refreshes and checks for new messages.
+// setInterval("loadNewMessages();", 1000);
+// loadNewMessages();
 });

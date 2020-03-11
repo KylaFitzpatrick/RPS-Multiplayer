@@ -152,3 +152,25 @@ img{
     height: 100px;
     padding:10px;
 }
+#chat-message{
+    margin: 0 auto;
+    text-align: center;
+}
+#comment-display{
+    width:800px;
+    height: 400px;
+    margin-top: 20px;
+}
+
+#comment-input{
+    width: 800px;
+    margin-top: 20px;
+}
+button{
+    font-size: 40px;
+    background-color: blue;
+    border: solid 3px white;
+    font-family: 'Chicle', cursive;
+    color: white;
+    margin-top: 20px;
+}
