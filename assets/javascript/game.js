@@ -122,9 +122,9 @@ var userTwoWins_span = $("#user-two-wins");
 var userOneWins = 0;
 var userOneWins_span = $("#user-one-wins");
 var userTwoLoses = 0;
-var userTwoLoses_span = $("#user-two-losses");
+var userTwoLoses_span = $("#user-two-loss");
 var userOneLoses = 0;
-var userOneLoses_span = $("#user-one-losses");
+var userOneLoses_span = $("#user-one-loss");
 var scoreBoard_div = $("#score-board");
 var result_p = $(".result > p");
 var oneRock_div = $("#one-r")
@@ -144,6 +144,7 @@ function translateToWord(letter){
 
 function win(userChoice, userTwoChoice){
  userOneWins++;
+ userTwoLoses++;
  userOneWins_span.html(userOneWins)
  userTwoLoses_span.html(userTwoLoses)
  result_p.html(`${translateToWord(userChoice)} beats ${translateToWord(userTwoChoice)}. You Win!`);
@@ -151,6 +152,7 @@ function win(userChoice, userTwoChoice){
 
 function lose(){
   userTwoWins++;
+  userOneLoses++;
  userOneLoses_span.html(userOneLoses)
  userTwoWins_span.html(userTwoWins)
  result_p.html(`${translateToWord(userChoice)} loses to ${translateToWord(userTwoChoice)}. You Lose!`);
@@ -225,7 +227,7 @@ main();
 
 function resetGame() {
   //resetgame if tie or player losses
- if(userTwoWins >= 3 || userOneWins >= 3){
+ if(userTwoWins === 3 || userOneWins === 3){
   $("#user-one-wins").text("0");
   $("#user-two-wins").text("0");
   $("#user-one-loses").text("0");
@@ -238,18 +240,16 @@ function resetGame() {
 function userOne(){
 // Create 3 number options 
 for (var i = 0; i < 3; i++) {
-// var randomChoice = Math.floor(Math.random()*options.length)
 
-  // Add number options to button tag
+  // Add number options to img tag
   var imageRPS = $("<img>");
 
-  // Each rps will be given the class ".crps-image".
+  // Each rps will be given the class ".rps-image".
   imageRPS.addClass("rps-image");
   // imageRPS.attr("id", "user-one");
 
  // Each imageRPS will be given a src link to the rps image
  if(i === 0){ 
-// imageRPS.attr("src", "assets/images/rock.png");
 $("#one-r").append(imageRPS.attr("src", "assets/images/rock.png"));
  } else if(i === 1){
 $("#one-p").append(imageRPS.attr("src", "assets/images/paper.png"));
@@ -265,7 +265,7 @@ function userTwo(){
   
 for (var i = 0; i < 3; i++) {
   
-    // Add number options to button tag
+    // Add number options to img tag
     var imageRPS = $("<img>");
   
     // Each rps will be given the class ".crps-image".

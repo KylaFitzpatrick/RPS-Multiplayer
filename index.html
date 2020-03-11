@@ -16,7 +16,7 @@
         <div class="container">
             <div id="game">
                 <h1 id="rps">Rock Paper Scissors</h1>
-                <img id="rps-image" src="assets/images/rock-paper-scissors-vector-line-icons.png">
+                <!-- <img id="rps-image" src="assets/images/rock-paper-scissors-vector-line-icons.png"> -->
             </div>
         </div>
 
@@ -25,14 +25,14 @@
             <div class="container">
                 <div id="game-description">
                     <form role="form">
-                        <input type="text" id="player-1-inp" placeholder="Enter player 1">
-                        <input type="text" id="player-2-inp" placeholder="Enter player 2">
+                        <input class="player" type="text" id="player-1-inp" placeholder="Enter player 1">
+                        <input class="player" type="text" id="player-2-inp" placeholder="Enter player 2">
                     <button id="start-button" >Start!</button>
                     </form>
                 </div>
                 <div id="score-board">
-                    <div id="user-one-label" class="label">User 1</div>
-                    <div id="user-two-label" class="label">User 2</div>
+                    <div id="user-one-label" class="label">Player 1</div>
+                    <div id="user-two-label" class="label">Player 2</div>
                     <div id="wins-label">Wins</div>
                     <span id="user-one-wins">0</span>:<span id="user-two-wins">0</span>
                     <br>
@@ -41,17 +41,17 @@
                 </div>
 
                 <div class="result">
-                    <p>Scissors cuts paper</p>
+                    <p></p>
                 </div>
                     <div id="users-choice">
-                        <div id="user-one-choice" class="user-choice">User 1</div>
+                        <div id="user-one-choice" class="user-choice">Player 1</div>
                         <br>
                         <div id="user-one-choices">
                             <div class="choice" id="one-r"></div>
                             <div class="choice" id="one-p"></div>
                             <div class="choice" id="one-s"></div>
                         </div>
-                        <div id="user-two-choice" class="user-choice">User 2</div>
+                        <div id="user-two-choice" class="user-choice">Player 2</div>
                         <br>
                         <div id="user-two-choices">
                             <div class="choice" id="two-r"></div>

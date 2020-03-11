@@ -5,9 +5,10 @@
 } */
 body{
     font-family: 'Chicle', cursive; 
-    background-image: linear-gradient(to right, green,blue,indigo);
+    /* background-image: linear-gradient(to right, green,blue,indigo); */
     font-size: 40px;
     color: white;
+    background-color:purple;
 
 }
 #name{
@@ -15,13 +16,18 @@ body{
 }
 input{
     font-size: 40px;
+    font-family: 'Chicle', cursive;
 }
+
 #start-button{
+    margin-top: 20px;
     text-align: center;
     font-size: 50px;
-    background-color:red;
+    background-color: blue;
     border-width: 3px;
-    border-color: black;
+    border-color: white;
+    color: white;
+    font-family: 'Chicle', cursive;
     /* display: "none"; */
 
 }
@@ -33,27 +39,39 @@ input{
     border: 3px solid white;
     border-radius: 4px;
     text-align: center;
-    width: 800px;
+    width: 600px;
     color: white;
     font-size: 46px;
     padding: 15px 20px;
     position: relative;
 }
 .label{
-    background: purple;
+    background: blue;
     font-size: 40px;
     padding: 2px 10px;
+    border: solid white 3px;
 }
-
+.user-choice{
+    margin:0 auto;
+    margin-top: 40px;
+    border: solid white 3px;
+    background: blue;
+    width: 150px;
+    text-align: center;
+}
 #user-one-label{
     position: absolute;
-    top: 30px;
-    left: -25px;
+    font-size: 40px;
+    top: 40px;
+    left: 40px;
+    width: 150px;
 }
 #user-two-label{
     position: absolute;
-    top: 30px;
-    right: -25px;
+    font-size: 40px;
+    top: 40px;
+    right: 40px;
+    width: 150px;
 }
 .result > p{
     text-align: center;
@@ -68,7 +86,7 @@ input{
 }
 .choice:hover{
     cursor: pointer;
-    background: purple;
+    background: blue;
 }
 .choice-message{
     text-align: center;
