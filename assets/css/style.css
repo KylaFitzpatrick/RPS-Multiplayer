@@ -10,13 +10,19 @@ body{
     color: white;
 
 }
+#name{
+    color: white;
+}
+input{
+    font-size: 40px;
+}
 #start-button{
     text-align: center;
     font-size: 50px;
     background-color:red;
     border-width: 3px;
     border-color: black;
-    display: "none";
+    /* display: "none"; */
 
 }
 #user-choice{
@@ -67,21 +73,6 @@ body{
 .choice-message{
     text-align: center;
 }
-/* button{
-    font-family: 'Chicle', cursive;
-    font-size: 50px;
-    color: purple;
-    margin: 10px;
-    border-color: blue;
-    border-width: 3px;
-}
-button:hover{
-    font-family: 'Chicle', cursive;
-    font-size: 50px;
-    color: blue;
-    margin: 10px;
-    border-color:purple;
-} */
 
 #rps{
     font-family: 'Monoton', cursive;
@@ -146,9 +137,4 @@ img{
     width: 100px;
     height: 100px;
     padding:10px;
-}
-img:hover {
-    color:white;
-    border-style: solid;
-    border-width: 1px;
 }
