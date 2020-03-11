@@ -102,18 +102,21 @@ $(document).ready(function() {
 });
     database.ref().on("child_added", function(snapshot){
         player1Input = snapshot.val().player1Input,
+        player2Input = snapshot.val().player2Input,
         userOneChoice = snapshot.val().userOneChoice,
         userTwoChoice = snapshot.val().userTwoChoice,
         userOneWins = snapshot.val().userOneWins;
         userTwoWins = snapshot.val().userTwoWins;
         userOneLosses = snapshot.val().userOneLosses;
         userTwoLosses = snapshot.val().userTwoLosses;
-        $("#score-board").append(`
-        <div id="user-one-label">${player1Input}</div>`)
+        $("#user-one-label").append(`
+        <div>${player1Input}</div>`)
+        $("#user-two-label").append(`
+        <div >${player2Input}</div>`)
         $("#user-one-choice").append(`
-            <div>${userOneChoice}</div>`)
+            <div>${player1Input}</div>`)
         $("#user-two-choice").append(`
-            <div>${userTwoChoice}</div>`)
+            <div>${player2Input}</div>`)
         $("#user-one-wins").append(`
             <div>${userOneWins}</div>`)  
         $("#user-two-wins").append(`

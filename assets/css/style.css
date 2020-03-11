@@ -65,6 +65,7 @@ input{
     top: 40px;
     left: 40px;
     width: 150px;
+    /* height: 100px; */
 }
 #user-two-label{
     position: absolute;
@@ -72,6 +73,7 @@ input{
     top: 40px;
     right: 40px;
     width: 150px;
+    /* height: 100px; */
 }
 .result > p{
     text-align: center;
