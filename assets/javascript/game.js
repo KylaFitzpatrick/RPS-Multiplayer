@@ -1,12 +1,14 @@
 $(document).ready(function() {
   var player1 = true;
   var player2 = true;
+  var player1Input = $("#player-1-inp");
+  var player2Input = $("#player-2-inp");
   var player1Name = $("user-one-label");
   var player2Name = $("user-two-label");
-  var player1Choice = $("user-one-choice")
-  var player2Choice = $("user-two-choice")
-  var nameInput = $("#name-input")
-  var name = ""
+  var player1Choice = $("user-one-choice");
+  var player2Choice = $("user-two-choice");
+  var nameInput = $("#name-input");
+  var name = "";
   var currentPlayer = player1;
   
   function changePlayer(){
@@ -24,13 +26,6 @@ $(document).ready(function() {
       }
   }
 
- function resetGame(){
-  userOneWins = 0;
-  userTwoWins = 0;
-  userTwoLoses = 0;
-  userOneLoses = 0;
-
- }
   $("#start-button").on("click", function() {
     //send to database
 
@@ -76,7 +71,7 @@ $(document).ready(function() {
   //   var userTwoLosses = "";
   //   console.log("is this working");
   //   // Capture Button Click
-    $("#rps-image").on("click", function(event) {
+    $(".choice").on("click", function(event) {
         event.preventDefault();
         userOneChoice = $("#user-one-choice").val().trim();
         userTwoChoice = $("#user-two-choice").val().trim();
@@ -85,22 +80,36 @@ $(document).ready(function() {
         // userOneLosses = $("#user-one-losses").val().trim();
         // userTwoLosses = $("#user-two-losses").val().trim();
         database.ref().push({
+            
             userOneChoice: userOneChoice,
             userTwoChoice: userTwoChoice,
             userOneWins: userOneWins,
             userTwoWins: userTwoWins,
-            userOneLosses: userOneLosses,
-            userTwoLosses: userTwoLosses,
+            userOneLoses: userOneLoses,
+            userTwoLoses: userTwoLoses,
             dateAdded: firebase.database.ServerValue.TIMESTAMP
         });
     });
+    $("#start-button").on("click", function(event) {
+      event.preventDefault();
+      player1Input = $("#player-1-inp").val().trim();
+      player2Input = $("#player-2-inp").val().trim();
+
+    database.ref().push({
+        player1Input: player1Input,
+        player2Input: player2Input,
+  });
+});
     database.ref().on("child_added", function(snapshot){
+        player1Input = snapshot.val().player1Input,
         userOneChoice = snapshot.val().userOneChoice,
         userTwoChoice = snapshot.val().userTwoChoice,
         userOneWins = snapshot.val().userOneWins;
         userTwoWins = snapshot.val().userTwoWins;
         userOneLosses = snapshot.val().userOneLosses;
         userTwoLosses = snapshot.val().userTwoLosses;
+        $("#score-board").append(`
+        <div id="user-one-label">${player1Input}</div>`)
         $("#user-one-choice").append(`
             <div>${userOneChoice}</div>`)
         $("#user-two-choice").append(`
@@ -125,7 +134,6 @@ var userTwoLoses = 0;
 var userTwoLoses_span = $("#user-two-loss");
 var userOneLoses = 0;
 var userOneLoses_span = $("#user-one-loss");
-var scoreBoard_div = $("#score-board");
 var result_p = $(".result > p");
 var oneRock_div = $("#one-r")
 var onePaper_div = $("#one-p")
@@ -179,12 +187,14 @@ function getUserTwoChoices(){
     game("s2");
   })
 }
-getUserTwoChoices();
+// getUserTwoChoices();
 // console.log(getUserTwoChoices()); 
+var userTwoChoice = getUserTwoChoices();
+// var userChoice = getUserOneChoices();
 
-function game(){
-  var userTwoChoice = getUserTwoChoices();
-  var userChoice = getUserOneChoices();
+function game(userTwoChoice, userChoice){
+  // userTwoChoice = getUserTwoChoices();
+  // userChoice = getUserOneChoices();
   
   switch(userChoice + userTwoChoice){
     case "r1s2":
@@ -238,7 +248,7 @@ oneScissors_div.on("click", function(){
 //   game("s2");
 // })
 }
-getUserOneChoices();
+var userChoice = getUserOneChoices();
 
 
 
