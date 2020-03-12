@@ -172,8 +172,8 @@ else if(playerTurn == 'p2turn' && activePnum == 2) { // player2 turn and 2 playe
 }
 });
 
-playersRef.on('value', function(snaphot){   // When P2 makes a choice
-if(turn == 'player2turn' && activePnum == 2) {   // Only compute results when is player 2's turn and there are 2 people connected
+playersRef.on('value', function(snaphot){   // player 2 makes a choice
+if(playerTurn == 'player2turn' && activePnum == 2) {   // compute results when player 2's turn and 2 people connected
     var player1Name = snaphot.val().player1.name;
     var player2Name = snapshot.val().player2.name;
     var player1Choice = snapshot.val().player1.choice;
