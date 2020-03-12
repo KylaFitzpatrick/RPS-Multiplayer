@@ -8,38 +8,60 @@ $(document).ready(function() {
   var player1Choice = $("user-one-choice");
   var player2Choice = $("user-two-choice");
   var nameInput = $("#name-input");
-  var name = "";
+  var message = $("#message").val();
+  var userTwoWins = 0;
+  var userTwoWins_span = $("#user-two-wins");
+  var userOneWins = 0;
+  var userOneWins_span = $("#user-one-wins");
+  var userTwoLoses = 0;
+  var userTwoLoses_span = $("#user-two-loss");
+  var userOneLoses = 0;
+  var userOneLoses_span = $("#user-one-loss");
+  var result_p = $(".result > p");
+  var oneRock_div = $("#one-r")
+  var onePaper_div = $("#one-p")
+  var oneScissors_div = $("#one-s")
+  var twoRock_div = $("#two-r")
+  var twoPaper_div = $("#two-p")
+  var twoScissors_div = $("#two-s") 
   var currentPlayer = player1;
   
   function changePlayer(){
       if( currentPlayer  == player1 ){
         currentPlayer = player2;
 
-        nameInput.push(name);
-        player2Name.text(name)
-        player2Choice.text(name);
+        // nameInput.push(name);
+        player2Name.text(nameInput)
+        player2Choice.text(nameInput);
       }else{
           currentPlayer = player1;
-          nameInput.push(name);
-          player1Name.text(name);
-          player1Choice.text(name);
+          // nameInput.push(name);
+          player1Name.text(nameInput);
+          player1Choice.text(nameInput);
       }
   }
 
   $("#start-button").on("click", function() {
     //send to database
 
-//   //send to user1
-
-        if(player1Name !== ""){
+   //send to user1
+        if(nameInput !== "" && currentPlayer == player1){
+          // nameInput.push("");
+          player1Name.text(nameInput)
+          player1Choice.text(nameInput);
+        }
+        else if(nameInput !== "" && player1Name !== "" && currentPlayer == player2){
           $("#waiting-player").text("Waiting for Player 2 to join...")
+          // nameInput.push(name);
+          player2Name.text(nameInput);
+          player2Choice.text(nameInput);
           // player1Name.val()
           // player1Input.clear()
-        }else if(player1Name !== "" && player2Name !== ""){
+        }else if(nameInput !== "" && player1Name !== "" && player2Name !== ""){
           $("#waiting-player").text("Start game! Ro Sham Bo...")
         }
 
-        // setTurn();
+        setTurn();
 
         changePlayer();
     });
@@ -86,6 +108,15 @@ $(document).ready(function() {
             dateAdded: firebase.database.ServerValue.TIMESTAMP
         });
     });
+    $("#add-message").on("click", function(event) {
+      event.preventDefault();
+      message = $("#comment-input").val().trim();
+
+      database.ref().push({
+        message: message,
+      
+    });
+  });
     $("#start-button").on("click", function(event) {
       event.preventDefault();
       nameInput = $("#name-input").val().trim();
@@ -96,7 +127,8 @@ $(document).ready(function() {
   });
 });
     database.ref().on("child_added", function(snapshot){
-      nameInput = snapshot.val().userOneChoice,
+        nameInput = snapshot.val().nameInput,
+        message = snapshot.val().message,
         // player1Input = snapshot.val().player1Input,
         // player2Input = snapshot.val().player2Input,
         userOneChoice = snapshot.val().userOneChoice,
@@ -108,11 +140,11 @@ $(document).ready(function() {
         $("#user-one-label").append(`
         <div>${nameInput}</div>`)
         $("#user-two-label").append(`
-        <div >${player2Input}</div>`)
+        <div >${nameInput}</div>`)
         $("#user-one-choice").append(`
-            <div>${player1Input}</div>`)
+            <div>${nameInput}</div>`)
         $("#user-two-choice").append(`
-            <div>${player2Input}</div>`)
+            <div>${nameInput}</div>`)
         $("#user-one-wins").append(`
             <div>${userOneWins}</div>`)  
         $("#user-two-wins").append(`
@@ -120,26 +152,12 @@ $(document).ready(function() {
         $("#user-one-losses").append(`
             <div>${userOneLosses}</div>`)  
         $("#user-two-losses").append(`
-            <div>${userTwoLosses}</div>`)    
+            <div>${userTwoLosses}</div>`)
+        $("#comment-display").append(`
+        <div>${message}</div>`)    
     }, function(errorObject) {
         console.log("Errors handled: " + errorObject.code);
     }) 
-
-var userTwoWins = 0;
-var userTwoWins_span = $("#user-two-wins");
-var userOneWins = 0;
-var userOneWins_span = $("#user-one-wins");
-var userTwoLoses = 0;
-var userTwoLoses_span = $("#user-two-loss");
-var userOneLoses = 0;
-var userOneLoses_span = $("#user-one-loss");
-var result_p = $(".result > p");
-var oneRock_div = $("#one-r")
-var onePaper_div = $("#one-p")
-var oneScissors_div = $("#one-s")
-var twoRock_div = $("#two-r")
-var twoPaper_div = $("#two-p")
-var twoScissors_div = $("#two-s")
 
 resetGame();
 
@@ -311,24 +329,4 @@ for (var i = 0; i < 3; i++) {
 }
 userTwo();
 
-// function loadNewMessages() {
-//   // Loads new messages from retrieve_new.php file into new_posts div
-//    $('#new_posts').load("retrieve_new.php");
-
-//    // Determines whether or not there is a new message by searching new_posts div
-//     if ($("#new_posts").html != "") {
-
-//     // If nothing exists it won't do anything but if there is it will post this:
-//      $('#chatbox').prepend("" + $("#new_posts").html + "");
-
-//     // This makes it fade in. Not necessary but cool.
-//      $("#new_message").fadeIn(1000);
-
-//     // Empties the div for future posts.
-//      $("#actions").html("");
-//    }
-// }
-// // Refreshes and checks for new messages.
-// setInterval("loadNewMessages();", 1000);
-// loadNewMessages();
 });
