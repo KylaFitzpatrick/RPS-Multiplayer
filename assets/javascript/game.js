@@ -1,30 +1,166 @@
 $(document).ready(function() {
-  var player1 = true;
-  var player2 = true;
-  // var player1Input = $("#player-1-inp");
-  // var player2Input = $("#player-2-inp");
-  var player1Name = $("user-one-label");
-  var player2Name = $("user-two-label");
-  var player1Choice = $("user-one-choice");
-  var player2Choice = $("user-two-choice");
-  var nameInput = $("#name-input");
-  var message = $("#message").val();
-  var userTwoWins = 0;
-  var userTwoWins_span = $("#user-two-wins");
+
+  var myConfig = {
+    apiKey: config.apiKey,
+    authDomain: config.authDomain,
+    databaseURL: config.databaseURL,
+    projectId: config.projectId,
+    storageBucket: config.storageBucket,
+    messagingSenderId: config.messagingSenderId,
+    appId: config.appId
+  }
+  
+  //   // Initialize Firebase
+    firebase.initializeApp(myConfig);
+    var database = firebase.database();
+  //db ref
+    var playersRef = db.ref('players'); // Reference entire players folder 
+    var player1Ref = playersRef.child('p1'); // Reference entire P1 folder
+    var player2Ref = playersRef.child('p2'); // Reference entire P2 folder
+    var winsRef = db.ref('win');    // Reference both player losses
+    var losesRef = db.ref('loses');    // Reference both player wins
+    var turnRef = db.ref('turn'); // to track the turns
+    var connectionsRef = db.ref("connections"); // Folder to store each connection
+    var connectedRef = db.ref(".info/connected");// Firebase's default Ref to track connections (boolean)
+    var messageRef = db.ref('chat'); // Reference chat
+  // Firebase Reference collections
+//   database.ref().on("child_added", function(snapshot){
+//     nameInput = snapshot.val().nameInput,
+//     message = snapshot.val().message,
+//     userOneChoice = snapshot.val().userOneChoice,
+//     userTwoChoice = snapshot.val().userTwoChoice,
+//     userOneWins = snapshot.val().userOneWins;
+//     userTwoWins = snapshot.val().userTwoWins;
+//     userOneLosses = snapshot.val().userOneLosses;
+//     userTwoLosses = snapshot.val().userTwoLosses;
+//     $("#user-one-label").append(`
+//     <div>${nameInput}</div>`)
+//     $("#user-two-label").append(`
+//     <div >${nameInput}</div>`)
+//     $("#user-one-choice").append(`
+//         <div>${nameInput}</div>`)
+//     $("#user-two-choice").append(`
+//         <div>${nameInput}</div>`)
+//     // $("#user-one-wins").append(`
+//     //     <div>${userOneWins}</div>`)  
+//     // $("#user-two-wins").append(`
+//     //     <div>${userTwoWins}</div>`) 
+//     // $("#user-one-losses").append(`
+//     //     <div>${userOneLosses}</div>`)  
+//     // $("#user-two-losses").append(`
+//     //     <div>${userTwoLosses}</div>`)
+//     $("#comment-display").append(`${message}`)    
+// }, function(errorObject) {
+//     console.log("Errors handled: " + errorObject.code);
+// }) 
+
+// resetGame();
+
+  // Variables
+  var player2Name = '';
+  var player1Name = '';
   var userOneWins = 0;
-  var userOneWins_span = $("#user-one-wins");
-  var userTwoLoses = 0;
-  var userTwoLoses_span = $("#user-two-loss");
   var userOneLoses = 0;
-  var userOneLoses_span = $("#user-one-loss");
-  var result_p = $(".result > p");
-  var oneRock_div = $("#one-r")
-  var onePaper_div = $("#one-p")
-  var oneScissors_div = $("#one-s")
-  var twoRock_div = $("#two-r")
-  var twoPaper_div = $("#two-p")
-  var twoScissors_div = $("#two-s") 
-  var currentPlayer = player1;
+  var player1Choice = '';
+  var userTwoWins = 0;
+  var userTwoLoses = 0;
+  var player2Choice = '';
+  var pTurn = '';
+  var activePnum = 0;
+  var ties = '';
+
+  //dom
+  var $player1Name = $("user-one-label");
+  var $player2Name = $("user-two-label");
+  var $player1Choice = $("user-one-choice");
+  var $player2Choice = $("user-two-choice");
+  var $nameInput = $("#name-input");
+  var $message = $("#comment-input");
+  var $submit = $("add-message");
+  var $userTwoWins_span = $("#user-two-wins");
+  var $userOneWins_span = $("#user-one-wins");
+  var $userTwoLoses_span = $("#user-two-loss");
+  var $userOneLoses_span = $("#user-one-loss");
+  var $result_p = $(".result > p");
+  var $oneRock_div = $("#one-r");
+  var $onePaper_div = $("#one-p");
+  var $oneScissors_div = $("#one-s");
+  var $twoRock_div = $("#two-r");
+  var $twoPaper_div = $("#two-p");
+  var $twoScissors_div = $("#two-s"); 
+
+    $("#start-button").on("click", function() {
+      //send to database
+  
+     //send to user1
+          if(nameInput !== "" && currentPlayer == player1){
+            // nameInput.push("");
+            player1Name.text(nameInput)
+            player1Choice.text(nameInput);
+          }
+          else if(nameInput !== "" && player1Name !== "" && currentPlayer == player2){
+            $("#waiting-player").text("Waiting for Player 2 to join...")
+            // nameInput.push(name);
+            player2Name.text(nameInput);
+            player2Choice.text(nameInput);
+            // player1Name.val()
+            // player1Input.clear()
+          }else if(nameInput !== "" && player1Name !== "" && player2Name !== ""){
+            $("#waiting-player").text("Start game! Ro Sham Bo...")
+          }
+  
+          setTurn();
+  
+          changePlayer();
+      });
+    
+      $("#add-message").on("click", function(event) {
+        event.preventDefault();
+        message = $("#comment-input").val().trim();
+  
+        database.ref().push({
+          message: message,
+        
+      });
+    });
+      $("#start-button").on("click", function(event) {
+        event.preventDefault();
+        nameInput = $("#name-input").val().trim();
+  
+      database.ref().push({
+          nameInput: nameInput,
+          // player2Input: player2Input,
+    });
+  });
+      
+  //   // Initial Values
+  //   var userOneChoice = "";
+  //   var userTwoChoice = "";
+  //   var userOneWins = "";
+  //   var userTwoWins = "";
+  //   var userOneLosses = "";
+  //   var userTwoLosses = "";
+  //   console.log("is this working");
+  //   // Capture Button Click
+    // $(".choice").on("click", function(event) {
+    //     event.preventDefault();
+    //     userOneChoice = $("#user-one-choice").val().trim();
+    //     userTwoChoice = $("#user-two-choice").val().trim();
+        // userOneWins = $("#user-one-wins").val().trim();
+        // userTwoWins = $("#user-two-wins").val().trim();
+        // userOneLosses = $("#user-one-losses").val().trim();
+        // userTwoLosses = $("#user-two-losses").val().trim();
+        // database.ref().push({
+            
+        //     userOneChoice: userOneChoice,
+        //     userTwoChoice: userTwoChoice,
+            // userOneWins: userOneWins,
+            // userTwoWins: userTwoWins,
+            // userOneLoses: userOneLoses,
+            // userTwoLoses: userTwoLoses,
+    //         dateAdded: firebase.database.ServerValue.TIMESTAMP
+    //     });
+    // });
   
   function changePlayer(){
       if( currentPlayer  == player1 ){
@@ -41,129 +177,10 @@ $(document).ready(function() {
       }
   }
 
-  $("#start-button").on("click", function() {
-    //send to database
-
-   //send to user1
-        if(nameInput !== "" && currentPlayer == player1){
-          // nameInput.push("");
-          player1Name.text(nameInput)
-          player1Choice.text(nameInput);
-        }
-        else if(nameInput !== "" && player1Name !== "" && currentPlayer == player2){
-          $("#waiting-player").text("Waiting for Player 2 to join...")
-          // nameInput.push(name);
-          player2Name.text(nameInput);
-          player2Choice.text(nameInput);
-          // player1Name.val()
-          // player1Input.clear()
-        }else if(nameInput !== "" && player1Name !== "" && player2Name !== ""){
-          $("#waiting-player").text("Start game! Ro Sham Bo...")
-        }
-
-        setTurn();
-
-        changePlayer();
-    });
-  
- 
-  var myConfig = {
-    apiKey: config.apiKey,
-    authDomain: config.authDomain,
-    databaseURL: config.databaseURL,
-    projectId: config.projectId,
-    storageBucket: config.storageBucket,
-    messagingSenderId: config.messagingSenderId,
-    appId: config.appId
-  }
-  
-  //   // Initialize Firebase
-    firebase.initializeApp(myConfig);
-    var database = firebase.database();
-  //   // Initial Values
-  //   var userOneChoice = "";
-  //   var userTwoChoice = "";
-  //   var userOneWins = "";
-  //   var userTwoWins = "";
-  //   var userOneLosses = "";
-  //   var userTwoLosses = "";
-  //   console.log("is this working");
-  //   // Capture Button Click
-    $(".choice").on("click", function(event) {
-        event.preventDefault();
-        userOneChoice = $("#user-one-choice").val().trim();
-        userTwoChoice = $("#user-two-choice").val().trim();
-        // userOneWins = $("#user-one-wins").val().trim();
-        // userTwoWins = $("#user-two-wins").val().trim();
-        // userOneLosses = $("#user-one-losses").val().trim();
-        // userTwoLosses = $("#user-two-losses").val().trim();
-        database.ref().push({
-            
-            userOneChoice: userOneChoice,
-            userTwoChoice: userTwoChoice,
-            userOneWins: userOneWins,
-            userTwoWins: userTwoWins,
-            userOneLoses: userOneLoses,
-            userTwoLoses: userTwoLoses,
-            dateAdded: firebase.database.ServerValue.TIMESTAMP
-        });
-    });
-    $("#add-message").on("click", function(event) {
-      event.preventDefault();
-      message = $("#comment-input").val().trim();
-
-      database.ref().push({
-        message: message,
-      
-    });
-  });
-    $("#start-button").on("click", function(event) {
-      event.preventDefault();
-      nameInput = $("#name-input").val().trim();
-
-    database.ref().push({
-        nameInput: nameInput,
-        // player2Input: player2Input,
-  });
-});
-    database.ref().on("child_added", function(snapshot){
-        nameInput = snapshot.val().nameInput,
-        message = snapshot.val().message,
-        // player1Input = snapshot.val().player1Input,
-        // player2Input = snapshot.val().player2Input,
-        userOneChoice = snapshot.val().userOneChoice,
-        userTwoChoice = snapshot.val().userTwoChoice,
-        userOneWins = snapshot.val().userOneWins;
-        userTwoWins = snapshot.val().userTwoWins;
-        userOneLosses = snapshot.val().userOneLosses;
-        userTwoLosses = snapshot.val().userTwoLosses;
-        $("#user-one-label").append(`
-        <div>${nameInput}</div>`)
-        $("#user-two-label").append(`
-        <div >${nameInput}</div>`)
-        $("#user-one-choice").append(`
-            <div>${nameInput}</div>`)
-        $("#user-two-choice").append(`
-            <div>${nameInput}</div>`)
-        $("#user-one-wins").append(`
-            <div>${userOneWins}</div>`)  
-        $("#user-two-wins").append(`
-            <div>${userTwoWins}</div>`) 
-        $("#user-one-losses").append(`
-            <div>${userOneLosses}</div>`)  
-        $("#user-two-losses").append(`
-            <div>${userTwoLosses}</div>`)
-        $("ul").append(`<li>${message}</li>`)    
-    }, function(errorObject) {
-        console.log("Errors handled: " + errorObject.code);
-    }) 
-
-resetGame();
-
-function translateToWord(letter){
-  if(letter === "r1" || letter === "r2") return "Rock";
-  if(letter === "p1" || letter === "p2") return "Paper";
-  if(letter === "s1" || letter === "s2") return "Scissors";
+function translateToWord(varter){
+  if(varter === "r1" || varter === "r2") return "Rock";
+  if(varter === "p1" || varter === "p2") return "Paper";
+  if(varter === "s1" || varter === "s2") return "Scissors";
 }
 
 function win(userChoice, userTwoChoice){
@@ -203,13 +220,13 @@ function getUserTwoChoices(){
     game("s2");
   })
 }
-// getUserTwoChoices();
+getUserTwoChoices();
 // console.log(getUserTwoChoices()); 
-var userTwoChoice = getUserTwoChoices();
+
 // var userChoice = getUserOneChoices();
 
-function game(userTwoChoice, userChoice){
-  // userTwoChoice = getUserTwoChoices();
+function game(userChoice){
+  var userTwoChoice = getUserTwoChoices();
   // userChoice = getUserOneChoices();
   
   switch(userChoice + userTwoChoice){
@@ -237,8 +254,9 @@ function game(userTwoChoice, userChoice){
 // var userTwoChoice = "r2"; "p2"; "s2"
 // var userChoice = "r1"; "p1"; "s1"
 
-function getUserOneChoices(){
+// function getUserOneChoices(){
  
+function main(){
 
 oneRock_div.on("click", function(){
   game("r1");
@@ -264,7 +282,8 @@ oneScissors_div.on("click", function(){
 //   game("s2");
 // })
 }
-var userChoice = getUserOneChoices();
+// var userChoice = getUserOneChoices();
+main();
 
 
 
