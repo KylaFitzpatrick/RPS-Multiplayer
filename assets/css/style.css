@@ -30,7 +30,7 @@ input{
     /* display: "none"; */
 
 }
-#user-choice{
+#player-choice{
     display: inline-block;
 }
 #score-board{
@@ -50,7 +50,7 @@ input{
     padding: 2px 10px;
     border: solid white 3px;
 }
-.user-choice{
+.player-choice{
     margin:0 auto;
     margin-top: 40px;
     border: solid white 3px;
@@ -58,7 +58,7 @@ input{
     width: 150px;
     text-align: center;
 }
-#user-one-label{
+#player-one-label{
     position: absolute;
     font-size: 40px;
     top: 40px;
@@ -66,7 +66,7 @@ input{
     width: 150px;
     /* height: 100px; */
 }
-#user-two-label{
+#player-two-label{
     position: absolute;
     font-size: 40px;
     top: 40px;
