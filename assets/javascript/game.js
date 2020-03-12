@@ -14,15 +14,15 @@ $(document).ready(function() {
     firebase.initializeApp(myConfig);
     var database = firebase.database();
   //db ref
-    var playersRef = db.ref('players'); // Reference entire players folder 
-    var player1Ref = playersRef.child('p1'); // Reference entire P1 folder
-    var player2Ref = playersRef.child('p2'); // Reference entire P2 folder
-    var winsRef = db.ref('win');    // Reference both player losses
-    var losesRef = db.ref('loses');    // Reference both player wins
-    var turnRef = db.ref('turn'); // to track the turns
-    var connectionsRef = db.ref("connections"); // Folder to store each connection
-    var connectedRef = db.ref(".info/connected");// Firebase's default Ref to track connections (boolean)
-    var messageRef = db.ref('chat'); // Reference chat
+    var playersRef = database.ref('players'); // Reference entire players folder 
+    var player1Ref = playersRef.child('player1'); // Reference entire P1 folder
+    var player2Ref = playersRef.child('player2'); // Reference entire P2 folder
+    var winsRef = database.ref('win');    // Reference both player losses
+    var losesRef = database.ref('loses');    // Reference both player wins
+    var turnRef = database.ref('turn'); // to track the turns
+    var connectionsRef = database.ref("connections"); // Folder to store each connection
+    var connectedRef = database.ref(".info/connected");// Firebase's default Ref to track connections (boolean)
+    var messageRef = database.ref('chat'); // Reference chat
   // Firebase Reference collections
 //   database.ref().on("child_added", function(snapshot){
 //     nameInput = snapshot.val().nameInput,
