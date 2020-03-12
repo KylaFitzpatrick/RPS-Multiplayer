@@ -153,8 +153,7 @@ $(document).ready(function() {
             <div>${userOneLosses}</div>`)  
         $("#user-two-losses").append(`
             <div>${userTwoLosses}</div>`)
-        $("#comment-display").append(`
-        <div>${message}</div>`)    
+        $("ul").append(`<li>${message}</li>`)    
     }, function(errorObject) {
         console.log("Errors handled: " + errorObject.code);
     }) 
