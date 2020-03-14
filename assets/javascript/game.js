@@ -148,29 +148,6 @@ $(document).ready(function () {
         nameInput: $nameInput,
       });
     });
-    // player1Name = playerName;
-    //click start button
-    //send name to database
-    //get name and display in text
-    //if 2 players display player 1 start game
-
-    // $("#start-button").on("click", function (event) {
-    //   event.preventDefault();
-    //   $nameInput = $("#name-input").val().trim();
-
-    //   var num=activePnum 
-    //   playersRef.child('/player'+ num).set({ //creating 2players
-    //     nameInput: $nameInput,
-    //   });
-
-    // if(activePnum === 1){
-    //   $player1Name = $nameInput;
-    //   $player1Choice = $nameInput;
-    // }
-    // if(activePnum === 2){
-    //   $player2Name = $nameInput;
-    //   $player2Choice = $nameInput;
-    // }
   });
 
   //player 1 chooses rps
@@ -179,15 +156,9 @@ $(document).ready(function () {
   //if win display win 
   //if lose display lose
   // Capture Button Click
-  $(".choice").on("click", function (event) {
+  $(".choice").on("click", "data-choice", function (event) {
     event.preventDefault();
-
-    // turnRef.child('turn').set({
-    //   turn: turn,
-
-    // dateAdded: firebase.database.ServerValue.TIMESTAMP
-    //     });
-    // });
+    
     turnRef.on('child_changed', function (snapshot) { // listen for turn changes
       var turn = snapshot.val();
       console.log(`It's ${turn}`);
@@ -216,10 +187,12 @@ $(document).ready(function () {
           player2Wins++;
           winsRef.set({ 
             player1: player1Wins, 
-            player2: player2Wins });
+            player2: player2Wins 
+          });
           losesRef.set({ 
             player1: player1Loses, 
-            player2: player2Loses });
+            player2: player2Loses 
+          });
           $player1Loses_span.text(player1Loses);
           $player2Win_span.text(player2Wins);
           $playerWait.text(results);
@@ -230,10 +203,12 @@ $(document).ready(function () {
           player1Wins++;
           winsRef.set({ 
             player1: player1Wins, 
-            player2: player2Wins });
+            player2: player2Wins 
+          });
           losesRef.set({ 
             player1: player1Loses, 
-            player2: player2Loses });
+            player2: player2Loses 
+          });
           $player1Wins_span.text(player1Wins);
           $player2Loses_span.text(player2Loses);
           $playerWait.text(results);
@@ -248,10 +223,12 @@ $(document).ready(function () {
           player1Wins++;
           winsRef.set({ 
             player1: player1Wins, 
-            player2: player2Wins });
+            player2: player2Wins 
+          });
           losesRef.set({ 
             player1: player1Loses, 
-            player2: player2Loses });
+            player2: player2Loses 
+          });
           $player1Wins_span.text(player1Wins);
           $player2Loses_span.text(player2Loses);
           $playerWait.text(results);
@@ -310,19 +287,22 @@ $(document).ready(function () {
         }
       }
     });
-  });
-  var getPlayerChoice = function (turn) {  // save player choice to db
-    return function (e) {
-      var target = $(e.target);
-      var playerChoice = target.attr('data-choice');    // get player choice attr from the clicked button
+  // });
+  // var getPlayerChoice = function (turn) {  // save player choice to db
+  //   return function (e) {
+  //     var target = $(e.target);
+  //     var playerChoice = target.attr('data-choice');    // get player choice attr from the clicked img
       // target.closest('div.card').find('img').attr('src', `./assets/images/${playerChoice}.png`); // change the image to match the player's choice
+      function getPlayerChoice(turn){
+        var playerChoice = $(".choice").attr('data-choice'); 
       if (turn == 'player1turn') {
-        player1Choice = playerChoice; // store the data-playerChoice attr value in a variable
-        player1Ref.set({ 
-          choice: player1Choice 
+        player1Choice = playerChoice; // store the data-choice attr value in a variable
+        player1Ref.child(player1Choice).set({ 
+          choice: player1Choice, 
         }); //set the database with the player choice
-        turn = 'player2turn';    // change turn and store the value in a variable
-        turnRef.set({ 
+        turn = 'player2turn';
+            // change turn and store the value in a variable
+        turnRef.child(turn).set({ 
           turn: turn 
         });    // set the turn in database
         $player1Choice.off('click'); // removes the event listener 
@@ -333,14 +313,15 @@ $(document).ready(function () {
           choice: player2Choice 
         }); //set the player choice
         turn = 'player1turn';
-        turnRef.set({ turn: turn });
+        turnRef.set({ 
+          turn: turn 
+        });
         $player1Turn.text('Your turn!');
         $player2Turn.text('Your turn!');
         $player2Choice.off('click');
       }
     }
-  }
-
+  });
   //display message if player submits message
   //submit 
   $("#add-message").on("click", function (event) {
