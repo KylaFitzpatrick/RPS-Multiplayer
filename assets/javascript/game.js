@@ -50,13 +50,6 @@ $(document).ready(function () {
   var $player1Wins_span = $("#player-one-wins");
   var $player2Loses_span = $("#player-two-loss");
   var $player1Loses_span = $("#player-one-loss");
-  // var $result_p = $(".result > p");
-  // var $oneRock_div = $("#one-r");
-  // var $onePaper_div = $("#one-p");
-  // var $oneScissors_div = $("#one-s");
-  // var $twoRock_div = $("#two-r");
-  // var $twoPaper_div = $("#two-p");
-  // var $twoScissors_div = $("#two-s");
   var $playerWait = $("#waiting-player");
   var $player1Turn = $("#player-turn-one");
   var $player2Turn = $("#player-turn-two");
@@ -67,24 +60,19 @@ $(document).ready(function () {
   // var playerName = function () {
   $("#start-button").on("click", function (event) {
     event.preventDefault();
-    // $nameInput = $("#name-input").val().trim();
 
-    // var num=activePnum 
-    // playersRef.child('/player'+ num).set({ //creating 2players
-    //   nameInput: $nameInput,
-    // });
     connectedRef.on('value', function (snapshot) { // is player connected/disconnected
       if (snapshot.val()) { // if connected
         connectionsRef.push(true);
         connectionsRef.onDisconnect().remove(); // remove player from the connection when they disconnect
       }
-      // });
+      });
       connectionsRef.on('value', function (snapshot) { // If I just moved someone to my connection folder
         console.log(`Number of players online ${snapshot.numChildren()}`);
         activePnum = snapshot.numChildren();    // get the number of connections 
         playerName = $nameInput.val(); // get playername
         // $playerName.text(` ${playerName}`); // current player
-
+        //check for player1 input matches value in html
         if (activePnum == 1) { // if 1st player
           messageRef.set({}); // if only one player, clear the chat history in the db
           $messageHistory.empty(); // clear the text
@@ -106,9 +94,11 @@ $(document).ready(function () {
 
           // wait for player 2
           $playerWait.text('Waiting for player 2');
+          if(playerName === player1Name){
           $player1Name.text(player1Name)
           $player1Choice.text(player1Name)
           console.log('Waiting for player 2');
+          }
 
           turn = 'player2turn';
           turnRef.set({
@@ -141,14 +131,18 @@ $(document).ready(function () {
           losesRef.set(loses);
 
           // Inform player
+          if(playerName === player2Name){
           $playerWait.text('Start the game!');
           $player2Name.text(player2Name)
           $player2Choice.text(player2Name)
           console.log('start');
+          }
           turn = 'player1turn';
           turnRef.set({
              turn: turn 
             });
+          
+          
         }
 
 
@@ -159,7 +153,7 @@ $(document).ready(function () {
         nameInput: $nameInput,
       });
     });
-  });
+  
 
   //player 1 chooses rps
   //if player 1 chooses then player 2 chooses
@@ -170,8 +164,9 @@ $(document).ready(function () {
   $(".choice").on("click", function (event) {
     event.preventDefault();
     alert("choice click")
-    console.log($(".choice").attr("data-choice"))
-    getPlayerChoice();
+    $(this).attr("data-choice")
+    console.log($(this).attr("data-choice"))
+    getPlayerChoice(turn);
   });
     turnRef.on('child_changed', function (snapshot) { // listen for turn changes
       var turn = snapshot.val();
@@ -302,15 +297,16 @@ $(document).ready(function () {
       }
     });
   // });
-  function getPlayerChoice() {  // save player choice to db
+  function getPlayerChoice(turn) {  // save player choice to db
     // return function (e) {
-      // var target = $(e.target);
+    //   var target = $(e.target);
+    // $(this) = $(".choice")
       var playerChoice = $(".choice").attr('data-choice');    // get player choice attr from the clicked img
       if (turn == 'player1turn') {
-        // player1Choice = playerChoice; // store the data-choice attr value in a variable
+        player1Choice = playerChoice; // store the data-choice attr value in a variable
         // 
         player1Ref.update({ 
-          choice: playerChoice, 
+          choice: player1Choice, 
         });
         //set the database with the player choice
       turn = 'player2turn'
@@ -322,9 +318,9 @@ $(document).ready(function () {
         // playerChoice.off('click'); // removes the event listener 
       }
       else {
-        // player2Choice = playerChoice;
+        player2Choice = playerChoice;
         player2Ref.update({ 
-          choice: playerChoice 
+          choice: player2Choice 
         }); //set the player choice
         turn = 'player1turn';
         turnRef.update({ 
@@ -332,7 +328,7 @@ $(document).ready(function () {
         });
         $player1Turn.text('Your turn!');
         $player2Turn.text('Your turn!');
-        playerChoice.off('click');
+        // playerChoice.off('click');
       }
     }
   // }
@@ -351,7 +347,7 @@ $(document).ready(function () {
     $messageInput.val('');
 
     messageRef.on('child_added', function (snapshot) {
-      var message = `<br>${snapshot.val().message}`;  // create a string with the msg
+      var message = `<ul><li>${snapshot.val().message}`;  // create a string with the msg
       $messageHistory.append(message);
     }, function (errorObject) {
       console.log("Errors handled: " + errorObject.code);
@@ -359,126 +355,3 @@ $(document).ready(function () {
   });
 
 });
-
-
-
-// function translateToWord(varter){
-//   if(varter === "r1" || varter === "r2") return "Rock";
-//   if(varter === "p1" || varter === "p2") return "Paper";
-//   if(varter === "s1" || varter === "s2") return "Scissors";
-// }
-
-// function win(playerChoice, twoChoice){
-//  playerOneWins++;
-//  twoLoses++;
-//  playerOneWins_span.text(playerOneWins)
-//  twoLoses_span.text(twoLoses)
-//  result_p.text(`${translateToWord(playerChoice)} beats ${translateToWord(twoChoice)}. You Win!`);
-// }
-
-// function lose(playerChoice, twoChoice){
-//   twoWins++;
-//   playerOneLoses++;
-//  playerOneLoses_span.text(playerOneLoses)
-//  twoWins_span.text(twoWins)
-//  result_p.text(`${translateToWord(playerChoice)} loses to ${translateToWord(twoChoice)}. You Lose!`);
-// }
-
-
-// function tie(playerChoice, twoChoice){
-//   result_p.text(`${translateToWord(playerChoice)} ties with ${translateToWord(twoChoice)}. It's a tie!`);
-
-// }
-// function gettwoChoices(){
-//   // var choices = ["r2", "p2", "s2"]
-//   // var randomNumber = Math.floor(Math.random() * 3);
-//   // return choices[""];
-//   twoRock_div.on("click", function(){
-//     game("r2");
-//   })
-
-//   twoPaper_div.on("click", function(){
-//     game("p2");
-//   })
-
-//   twoScissors_div.on("click", function(){
-//     game("s2");
-//   })
-// }
-// gettwoChoices();
-// // console.log(gettwoChoices()); 
-
-// // var playerChoice = getplayerOneChoices();
-
-// function game(playerChoice){
-//   var twoChoice = gettwoChoices();
-//   // playerChoice = getplayerOneChoices();
-
-//   switch(playerChoice + twoChoice){
-//     case "r1s2":
-//     case "p1r2":
-//     case "s1p2":
-//       console.log("player1 wins");
-//       win(playerChoice, twoChoice);
-//       break;
-//     case "s1r2":
-//     case "r1p2":
-//     case "p1s2":
-//       console.log("player1 loses")
-//       lose(playerChoice, twoChoice);
-//       break;
-//     case "r1r2":
-//     case "p1p2":
-//     case "s1s2":
-//       console.log("tie")
-//       tie(playerChoice, twoChoice);
-//       break;
-//   }
-// }
-
-
-// // function getplayerOneChoices(){
-
-// function main(){
-
-// oneRock_div.on("click", function(){
-//   game("r1");
-// })
-
-// onePaper_div.on("click", function(){
-//   game("p1");
-// })
-
-// oneScissors_div.on("click", function(){
-//   game("s1");
-// })
-
-// // twoRock_div.on("click", function(){
-// //   game("r2");
-// // })
-
-// // twoPaper_div.on("click", function(){
-// //   game("p2");
-// // })
-
-// // twoScissors_div.on("click", function(){
-// //   game("s2");
-// // })
-// }
-// // var playerChoice = getplayerOneChoices();
-// main();
-
-
-
-// function resetGame() {
-//   //resetgame if tie or player losses
-//  if(twoWins === 3 || playerOneWins === 3){
-//   $("#player-one-wins").text("0");
-//   $("#player-two-wins").text("0");
-//   $("#player-one-loses").text("0");
-//   $("#player-two-loses").text("0");
-//  }
-//   console.log(" game is reset");
-// } 
-
-  // resetGame();
