@@ -156,9 +156,9 @@ $(document).ready(function () {
   //if win display win 
   //if lose display lose
   // Capture Button Click
-  $(".choice").on("click", "data-choice", function (event) {
-    event.preventDefault();
-    
+  // $(".choice").on("click", "data-choice", function (event) {
+  //   event.preventDefault();
+
     turnRef.on('child_changed', function (snapshot) { // listen for turn changes
       var turn = snapshot.val();
       console.log(`It's ${turn}`);
@@ -288,13 +288,15 @@ $(document).ready(function () {
       }
     });
   // });
-  // var getPlayerChoice = function (turn) {  // save player choice to db
-  //   return function (e) {
-  //     var target = $(e.target);
-  //     var playerChoice = target.attr('data-choice');    // get player choice attr from the clicked img
+  function getPlayerChoice(turn) {  // save player choice to db
+    return function (e) {
+      var target = $(e.target);
+      var playerChoice = target.attr('data-choice');    // get player choice attr from the clicked img
       // target.closest('div.card').find('img').attr('src', `./assets/images/${playerChoice}.png`); // change the image to match the player's choice
-      function getPlayerChoice(turn){
-        var playerChoice = $(".choice").attr('data-choice'); 
+      // $(".choice").on("click", "data-choice", function (event) {
+      //   event.preventDefault();
+      // function getPlayerChoice(turn){
+      //   var playerChoice = $(".choice").attr('data-choice'); 
       if (turn == 'player1turn') {
         player1Choice = playerChoice; // store the data-choice attr value in a variable
         player1Ref.child(player1Choice).set({ 
@@ -321,6 +323,12 @@ $(document).ready(function () {
         $player2Choice.off('click');
       }
     }
+  }
+// });
+  $(".choice").on("click", function (event) {
+        event.preventDefault();
+        alert("choice click")
+        getPlayerChoice();
   });
   //display message if player submits message
   //submit 
@@ -328,7 +336,7 @@ $(document).ready(function () {
     event.preventDefault();
     message = $("#comment-input").val().trim();
 
-    messageRef.child(message).set({ //creating 2players
+    messageRef.child(message).set({ //adding messages to db
       message: message,
 
     });
