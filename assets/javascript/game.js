@@ -38,10 +38,10 @@ $(document).ready(function () {
   var results = '';
 
   //dom
-  var $player1Name = $("player-one-label");
-  var $player2Name = $("player-two-label");
-  var $player1Choice = $("player-one-choice");
-  var $player2Choice = $("player-two-choice");
+  var $player1Name = $("#player-one-label");
+  var $player2Name = $("#player-two-label");
+  var $player1Choice = $("#player-one-choice");
+  var $player2Choice = $("#player-two-choice");
   var $nameInput = $("#name-input");
   var $messageHistory = $("#comment-display")
   var $messageInput = $("#comment-input");
@@ -50,13 +50,13 @@ $(document).ready(function () {
   var $player1Wins_span = $("#player-one-wins");
   var $player2Loses_span = $("#player-two-loss");
   var $player1Loses_span = $("#player-one-loss");
-  var $result_p = $(".result > p");
-  var $oneRock_div = $("#one-r");
-  var $onePaper_div = $("#one-p");
-  var $oneScissors_div = $("#one-s");
-  var $twoRock_div = $("#two-r");
-  var $twoPaper_div = $("#two-p");
-  var $twoScissors_div = $("#two-s");
+  // var $result_p = $(".result > p");
+  // var $oneRock_div = $("#one-r");
+  // var $onePaper_div = $("#one-p");
+  // var $oneScissors_div = $("#one-s");
+  // var $twoRock_div = $("#two-r");
+  // var $twoPaper_div = $("#two-p");
+  // var $twoScissors_div = $("#two-s");
   var $playerWait = $("#waiting-player");
   var $player1Turn = $("#player-turn-one");
   var $player2Turn = $("#player-turn-two");
@@ -95,7 +95,9 @@ $(document).ready(function () {
             choice: '',
             name: player1Name,
           };
-          var turns = { turn: turn };
+          var turns = { 
+            turn: turn 
+          };
 
           // sync object
           console.log(player1)
@@ -104,13 +106,18 @@ $(document).ready(function () {
 
           // wait for player 2
           $playerWait.text('Waiting for player 2');
+          $player1Name.text(player1Name)
+          $player1Choice.text(player1Name)
           console.log('Waiting for player 2');
 
           turn = 'player2turn';
-          turnRef.set({ turn: turn }); // set the turn 
+          turnRef.set({
+             turn: turn 
+            }); // set the turn 
 
           if (activePnum == 2) {
-            $playerWait.text('Start the game!');
+            $playerWait.text('Waiting for player 2');
+            
           }
         }
         else if (activePnum == 2) {  // if you 2nd player
@@ -135,9 +142,13 @@ $(document).ready(function () {
 
           // Inform player
           $playerWait.text('Start the game!');
+          $player2Name.text(player2Name)
+          $player2Choice.text(player2Name)
           console.log('start');
           turn = 'player1turn';
-          turnRef.set({ turn: turn });
+          turnRef.set({
+             turn: turn 
+            });
         }
 
 
@@ -293,18 +304,13 @@ $(document).ready(function () {
   // });
   function getPlayerChoice() {  // save player choice to db
     // return function (e) {
-    //   var target = $(e.target);
+      // var target = $(e.target);
       var playerChoice = $(".choice").attr('data-choice');    // get player choice attr from the clicked img
-      // target.closest('div.card').find('img').attr('src', `./assets/images/${playerChoice}.png`); // change the image to match the player's choice
-      // $(".choice").on("click", "data-choice", function (event) {
-      //   event.preventDefault();
-      // function getPlayerChoice(turn){
-      //   var playerChoice = $(".choice").attr('data-choice'); 
       if (turn == 'player1turn') {
-        player1Choice = playerChoice; // store the data-choice attr value in a variable
+        // player1Choice = playerChoice; // store the data-choice attr value in a variable
         // 
         player1Ref.update({ 
-          choice: player1Choice, 
+          choice: playerChoice, 
         });
         //set the database with the player choice
       turn = 'player2turn'
@@ -313,12 +319,12 @@ $(document).ready(function () {
           turn: turn 
         });
           // set the turn in database
-        $player1Choice.off('click'); // removes the event listener 
+        // playerChoice.off('click'); // removes the event listener 
       }
       else {
-        player2Choice = playerChoice;
+        // player2Choice = playerChoice;
         player2Ref.update({ 
-          choice: player2Choice 
+          choice: playerChoice 
         }); //set the player choice
         turn = 'player1turn';
         turnRef.update({ 
@@ -326,7 +332,7 @@ $(document).ready(function () {
         });
         $player1Turn.text('Your turn!');
         $player2Turn.text('Your turn!');
-        $player2Choice.off('click');
+        playerChoice.off('click');
       }
     }
   // }
