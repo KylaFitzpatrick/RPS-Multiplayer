@@ -14,15 +14,15 @@ $(document).ready(function () {
   firebase.initializeApp(myConfig);
   var database = firebase.database();
   //db ref
-  var playersRef = database.ref('players'); // Reference entire players folder 
-  var player1Ref = playersRef.child('/player1'); // Reference entire P1 folder
-  var player2Ref = playersRef.child('/player2'); // Reference entire P2 folder
-  var winsRef = database.ref('win');    // Reference both player losses
-  var losesRef = database.ref('loses');    // Reference both player wins
+  var playersRef = database.ref('players'); // players folder 
+  var player1Ref = playersRef.child('/player1'); // P1 folder
+  var player2Ref = playersRef.child('/player2'); // P2 folder
+  var winsRef = database.ref('win');    // both player losses
+  var losesRef = database.ref('loses');    // both player wins
   var turnRef = database.ref('turn'); // to track the turns
-  var connectionsRef = database.ref("connections"); // Folder to store each connection
-  var connectedRef = database.ref(".info/connected");// Firebase's default Ref to track connections (boolean)
-  var messageRef = database.ref('chat'); // Reference chat
+  var connectionsRef = database.ref("connections"); // store each connection
+  var connectedRef = database.ref(".info/connected");// default Ref to track connections (boolean)
+  var messageRef = database.ref('chat'); // chat
 
   // Variables
   var player2Name = '';
@@ -57,7 +57,6 @@ $(document).ready(function () {
 
   //functions
 
-  // var playerName = function () {
   $("#start-button").on("click", function (event) {
     event.preventDefault();
 
@@ -67,11 +66,12 @@ $(document).ready(function () {
         connectionsRef.onDisconnect().remove(); // remove player from the connection when they disconnect
       }
       });
-      connectionsRef.on('value', function (snapshot) { // If I just moved someone to my connection folder
+      connectionsRef.on('value', function (snapshot) { // moved player to connection folder
         console.log(`Number of players online ${snapshot.numChildren()}`);
         activePnum = snapshot.numChildren();    // get the number of connections 
         playerName = $nameInput.val(); // get playername
-        // $playerName.text(` ${playerName}`); // current player
+        
+         // current player
         //check for player1 input matches value in html
         if (activePnum == 1) { // if 1st player
           messageRef.set({}); // if only one player, clear the chat history in the db
@@ -94,12 +94,11 @@ $(document).ready(function () {
 
           // wait for player 2
           $playerWait.text('Waiting for player 2');
-          if(playerName === player1Name){
           $player1Name.text(player1Name)
           $player1Choice.text(player1Name)
           console.log('Waiting for player 2');
-          }
 
+          
           turn = 'player2turn';
           turnRef.set({
              turn: turn 
@@ -110,7 +109,10 @@ $(document).ready(function () {
             
           }
         }
-        else if (activePnum == 2) {  // if you 2nd player
+        else if  (activePnum == 2)  {
+          $playerWait.text('Waiting for player 2'); // if you 2nd player
+          // $player1Name.text(player1Ref.name)
+          // $player1Choice.text(player1Ref.name)
           player2Name = playerName;   // Store the current name into a different variable to keep track
           // Create the object
           var player2 = {
@@ -131,29 +133,31 @@ $(document).ready(function () {
           losesRef.set(loses);
 
           // Inform player
-          if(playerName === player2Name){
+          // if(playerName === player2Name && playerName === player2Name){
           $playerWait.text('Start the game!');
           $player2Name.text(player2Name)
           $player2Choice.text(player2Name)
+          // $player1Name.text(player1Ref.name)
+          // $player1Choice.text(player1Ref.name)
           console.log('start');
-          }
+          // }
           turn = 'player1turn';
           turnRef.set({
              turn: turn 
             });
-          
-          
+       
         }
+        // });
 
 
-      });
+      // });
 
       var num = activePnum
       playersRef.child('/player' + num).set({ //creating 2players
         nameInput: $nameInput,
       });
     });
-  
+  });
 
   //player 1 chooses rps
   //if player 1 chooses then player 2 chooses
@@ -164,18 +168,18 @@ $(document).ready(function () {
   $(".choice").on("click", function (event) {
     event.preventDefault();
     alert("choice click")
-    $(this).attr("data-choice")
+    choice = $(this).attr("data-choice")
     console.log($(this).attr("data-choice"))
-    getPlayerChoice(turn);
+    getPlayerChoice(choice);
   });
     turnRef.on('child_changed', function (snapshot) { // listen for turn changes
       var turn = snapshot.val();
       console.log(`It's ${turn}`);
       if (turn == 'player1turn' && activePnum == 2) {  // player1 turn if 2 players online
-        $player1Choice.on('click', getPlayerChoice(turn)); // listen for player1 click events on the choice btns
+        $player1Choice.on('click', getPlayerChoice(choice)); // listen for player1 click events on the choice btns
       }
       else if (turn == 'p2turn' && activePnum == 2) { // player2 turn and 2 players online
-        $player2Choice.on('click', getPlayerChoice(turn)); // player2 click events
+        $player2Choice.on('click', getPlayerChoice(choice)); // player2 click events
       }
     });
   
@@ -297,11 +301,10 @@ $(document).ready(function () {
       }
     });
   // });
-  function getPlayerChoice(turn) {  // save player choice to db
-    // return function (e) {
-    //   var target = $(e.target);
-    // $(this) = $(".choice")
-      var playerChoice = $(".choice").attr('data-choice');    // get player choice attr from the clicked img
+  function getPlayerChoice(choice) {  // save player choice to db
+    return function (e) {
+      var target = $(e.target);
+      var playerChoice = target.attr('data-choice');    // get player choice attr from the clicked img
       if (turn == 'player1turn') {
         player1Choice = playerChoice; // store the data-choice attr value in a variable
         // 
@@ -311,7 +314,7 @@ $(document).ready(function () {
         //set the database with the player choice
       turn = 'player2turn'
             // change turn and store the value in a variable
-        turnRef.child(turn).update({ 
+        turnRef.update({ 
           turn: turn 
         });
           // set the turn in database
@@ -331,7 +334,7 @@ $(document).ready(function () {
         // playerChoice.off('click');
       }
     }
-  // }
+  }
 // });
  
   //display message if player submits message
@@ -347,7 +350,7 @@ $(document).ready(function () {
     $messageInput.val('');
 
     messageRef.on('child_added', function (snapshot) {
-      var message = `<ul><li>${snapshot.val().message}`;  // create a string with the msg
+      var message = `${snapshot.val().message}`;  // create a string with the msg
       $messageHistory.append(message);
     }, function (errorObject) {
       console.log("Errors handled: " + errorObject.code);
