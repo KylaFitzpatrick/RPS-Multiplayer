@@ -117,20 +117,17 @@ $(document).ready(function () {
           turn: turn
         }); // set the turn
 
-        database.ref().on("value", function(snapshot) {
+        // database.ref().on("value", function(snapshot) {
         if (activePnum == 2) {
           $playerWait.text('Waiting for player 2');
-          $player1Name.text(snapshot.val().players.player1.name)
-          $player1Choice.text(snapshot.val().players.player1.name)
+          // $player1Name.text(snapshot.val().players.player1.name)
+          // $player1Choice.text(snapshot.val().players.player1.name)
 
         }
-      });
+      // });
       }
       else if (activePnum == 2) {
         $playerWait.text('Waiting for player 2'); // if you 2nd player
-        // && player2!==null
-        // $player1Name.text(player1Ref.name)
-        // $player1Choice.text(player1Ref.name)
         player2Name = playerName;   // Store the current name into a different variable to keep track
         // Create the object
         var player2 = {
@@ -152,21 +149,19 @@ $(document).ready(function () {
    // sync object
    console.log(player1)
         // Inform player
-        // if(playerName === player2Name && playerName === player2Name){
           $playerWait.text('Start the game!');
           database.ref().on("value", function(snapshot) {
-          if(activePnum === 2 && player2!==null){
+          if(activePnum === 2 && player2!==null && player1!==null){
             // playerName = snapshot.val().name
             console.log("name", snapshot.val().players.player2.name)
             $player2Name.text(snapshot.val().players.player2.name)
             $player2Choice.text(snapshot.val().players.player2.name)
-            $nameInput.text("")
+            $player1Name.text(snapshot.val().players.player1.name)
+            $player1Choice.text(snapshot.val().players.player1.name)
+            $nameInput.empty("")
             }
           });
-        // $player1Name.text(player1Ref.name)
-        // $player1Choice.text(player1Ref.name)
         console.log('start');
-        // }
         turn = 'player1turn';
         turnRef.set({
           turn: turn
@@ -325,16 +320,12 @@ $(document).ready(function () {
     }
   });
   // });
-  function getPlayerChoice(turn) {  // save player choice to db
-    // return function (e) {
-    //   var target = $(e.target);
-    //   var playerChoice = target.attr('data-choice');  
+  function getPlayerChoice(turn) {  // save player choice to db 
     return $(".choice").on("click", function (event) {
       event.preventDefault();
       alert("choice click")
       playerChoice = $(this).attr("data-choice")
       console.log($(this).attr("data-choice"))
-      // getPlayerChoice(turn);
       // get player choice attr from the clicked img
       if (turn == 'player1turn') {
         player1Choice = playerChoice; // store the data-choice attr value in a variable
@@ -349,7 +340,7 @@ $(document).ready(function () {
           turn: turn
         });
         // set the turn in database
-        playerChoice.off('click'); // removes the event listener 
+        // playerChoice.off('click'); // removes the event listener 
         $player2Turn.text('Your turn!');
       }
       else if (turn == 'player2turn'){
@@ -363,7 +354,7 @@ $(document).ready(function () {
         });
         // $player1Turn.text('Your turn!');
         // $player2Turn.text('Your turn!');
-        playerChoice.off('click');
+        // playerChoice.off('click');
       }
     });
   }
