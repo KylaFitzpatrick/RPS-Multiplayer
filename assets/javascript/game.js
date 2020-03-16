@@ -70,14 +70,6 @@ $(document).ready(function () {
       console.log(`Number of players online ${snapshot.numChildren()}`);
       activePnum = snapshot.numChildren();    // get the number of connections 
       playerName = $nameInput.val();// get playername
-      // playersRef.on('value', function(snapshot){
-      //   if(activePnum === 1 && player1!==null){
-      //     playerName = snapshot.val().players.player1.name
-      //   }
-      //   if(activePnum === 2 && player2!==null){
-      //     playerName = snapshot.val().players.player2.name
-      //   }
-      // });
       // current player
       //check for player1 input matches value in html
       if (activePnum == 1 && activePnum!== 2) { // if 1st player
@@ -127,7 +119,7 @@ $(document).ready(function () {
       // });
       }
       else if (activePnum == 2) {
-        $playerWait.text('Waiting for player 2'); // if you 2nd player
+        // $playerWait.text('Waiting for player 2'); // if you 2nd player
         player2Name = playerName;   // Store the current name into a different variable to keep track
         // Create the object
         var player2 = {
@@ -210,84 +202,16 @@ $(document).ready(function () {
       var player1Choice = snapshot.val().player1.choice;
       var player2Choice = snapshot.val().player2.choice;
 
-      if (player1Choice == 'rock' && player2Choice == 'rock') {
-        results = 'Tie';
+      if (player1Choice == 'rock' && player2Choice == 'rock' || 
+      player1Choice == 'scissors' && player2Choice == 'scissors' ||
+      player1Choice == 'paper' && player2Choice == 'paper') {
+        results = 'It is a tie';
         $playerWait.text(results);
       }
-      else if (player1Choice == 'rock' && player2Choice == 'paper') {
-        results = `Player 2:<br>${player2Name}<br>Won`;
-        player1Loses++;
-        player2Wins++;
-        winsRef.set({
-          player1: player1Wins,
-          player2: player2Wins
-        });
-        losesRef.set({
-          player1: player1Loses,
-          player2: player2Loses
-        });
-        $player1Loses_span.text(player1Loses);
-        $player2Win_span.text(player2Wins);
-        $playerWait.text(results);
-      }
-      else if (player1Choice == 'rock' && player2Choice == 'scissors') {
-        results = `Player 1:<br>${player1Name}<br>Won`;
-        player2Loses++;
-        player1Wins++;
-        winsRef.set({
-          player1: player1Wins,
-          player2: player2Wins
-        });
-        losesRef.set({
-          player1: player1Loses,
-          player2: player2Loses
-        });
-        $player1Wins_span.text(player1Wins);
-        $player2Loses_span.text(player2Loses);
-        $playerWait.text(results);
-      }
-      else if (player1Choice == 'paper' && player2Choice == 'paper') {
-        results = 'Tie';
-        $playerWait.text(results);
-      }
-      else if (player1Choice == 'paper' && player2Choice == 'rock') {
-        results = `Player 1:<br>${player1Name}<br>Won`;
-        player2Loses++;
-        player1Wins++;
-        winsRef.set({
-          player1: player1Wins,
-          player2: player2Wins
-        });
-        losesRef.set({
-          player1: player1Loses,
-          player2: player2Loses
-        });
-        $player1Wins_span.text(player1Wins);
-        $player2Loses_span.text(player2Loses);
-        $playerWait.text(results);
-      }
-      else if (player1Choice == 'paper' && player2Choice == 'scissors') {
-        results = `Player 2:<br>${player2Name}<br>Won`;
-        player1Loses++;
-        player2Wins++;
-        winsRef.set({
-          player1: player1Wins,
-          player2: player2Wins
-        });
-        losesRef.set({
-          player1: player1Loses,
-          player2: player2Loses
-        });
-        $player1Lose_span.text(player1Loses);
-        $player2Win_span.text(player2Wins);
-        $playerWait.text(results);
-      }
-      else if (player1Choice == 'scissors' && player2Choice == 'scissors') {
-        results = 'Tie';
-        $playerWait.text(results);
-      }
-      else if (player1Choice == 'scissors' && player2Choice == 'rock') {
-        results = `Player 2:<br>${player2Name}<br>Won`;
+      if (player1Choice == 'rock' && player2Choice == 'paper'||
+      player1Choice == 'scissors' && player2Choice == 'rock'||
+      player1Choice == 'paper' && player2Choice == 'scissors') {
+        results = `${player2Name} Won!`;
         player1Loses++;
         player2Wins++;
         winsRef.set({
@@ -302,8 +226,10 @@ $(document).ready(function () {
         $player2Wins_span.text(player2Wins);
         $playerWait.text(results);
       }
-      else if (player1Choice == 'scissors' && player2Choice == 'paper') {
-        results = `Player 1:<br>${player1Name}<br>Won`;
+      if (player1Choice == 'rock' && player2Choice == 'scissors' ||
+      player1Choice == 'paper' && player2Choice == 'rock'||
+      player1Choice == 'scissors' && player2Choice == 'paper') {
+        results = `${player1Name} Won!`;
         player2Loses++;
         player1Wins++;
         winsRef.set({
@@ -320,6 +246,80 @@ $(document).ready(function () {
       }
     }
   });
+      // if (player1Choice == 'paper' && player2Choice == 'paper') {
+      //   results = 'It is a tie';
+      //   $playerWait.text(results);
+      // }
+      // if (player1Choice == 'paper' && player2Choice == 'rock') {
+      //   results = `${player1Name} Won!`;
+      //   player2Loses++;
+      //   player1Wins++;
+      //   winsRef.set({
+      //     player1: player1Wins,
+      //     player2: player2Wins
+      //   });
+      //   losesRef.set({
+      //     player1: player1Loses,
+      //     player2: player2Loses
+      //   });
+      //   $player1Wins_span.text(player1Wins);
+      //   $player2Loses_span.text(player2Loses);
+      //   $playerWait.text(results);
+      // }
+      // if (player1Choice == 'paper' && player2Choice == 'scissors') {
+      //   results = `${player2Name} Won!`;
+      //   player1Loses++;
+      //   player2Wins++;
+      //   winsRef.set({
+      //     player1: player1Wins,
+      //     player2: player2Wins
+      //   });
+      //   losesRef.set({
+      //     player1: player1Loses,
+      //     player2: player2Loses
+      //   });
+      //   $player1Loses_span.text(player1Loses);
+      //   $player2Wins_span.text(player2Wins);
+      //   $playerWait.text(results);
+      // }
+      // if (player1Choice == 'scissors' && player2Choice == 'scissors') {
+      //   results = 'It is a tie';
+      //   $playerWait.text(results);
+      // }
+      // if (player1Choice == 'scissors' && player2Choice == 'rock') {
+      //   results = `${player2Name} Won!`;
+      //   player1Loses++;
+      //   player2Wins++;
+      //   winsRef.set({
+      //     player1: player1Wins,
+      //     player2: player2Wins
+      //   });
+      //   losesRef.set({
+      //     player1: player1Loses,
+      //     player2: player2Loses
+      //   });
+      //   $player1Loses_span.text(player1Loses);
+      //   $player2Wins_span.text(player2Wins);
+      //   $playerWait.text(results);
+      // }
+    //   if (player1Choice == 'scissors' && player2Choice == 'paper') {
+    //     results = `${player1Name} Won!`;
+    //     player2Loses++;
+    //     player1Wins++;
+    //     winsRef.set({
+    //       player1: player1Wins,
+    //       player2: player2Wins
+    //     });
+    //     losesRef.set({
+    //       player1: player1Loses,
+    //       player2: player2Loses
+    //     });
+    //     $player1Wins_span.text(player1Wins);
+    //     $player2Loses_span.text(player2Loses);
+    //     $playerWait.text(results);
+    //   }
+    // }
+  // });
   // });
   function getPlayerChoice(turn) {  // save player choice to db 
     return $(".choice").on("click", function (event) {
