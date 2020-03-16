@@ -380,10 +380,3 @@ $(document).ready(function () {
   
     });
   });   
-
-    // messageRef.on('child_added', function (snapshot) {
-    //   var message = `${snapshot.val().message} <textarea>`;  // create a string with the msg
-    //   $messageHistory.append(message);
-    // }, function (errorObject) {
-    //   console.log("Errors handled: " + errorObject.code);
-    // });
