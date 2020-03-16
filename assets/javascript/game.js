@@ -143,7 +143,7 @@ $(document).ready(function () {
         // Inform player
           $playerWait.text('Start the game!');
           database.ref().on("value", function(snapshot) {
-          if(activePnum === 2 && player2!==null && player1!==null){
+          if(activePnum == 2 && player2!==null){
             // playerName = snapshot.val().name
             console.log("name", snapshot.val().players.player2.name)
             $player2Name.text(snapshot.val().players.player2.name)
@@ -367,18 +367,23 @@ $(document).ready(function () {
     event.preventDefault();
     message = $("#comment-input").val().trim();
 
-    messageRef.child(message).set({ //adding messages to db
+    messageRef.child('message').set({ //adding messages to db
       message: message,
 
     });
     $messageInput.val('');
-
+  
     messageRef.on('child_added', function (snapshot) {
-      var message = `${snapshot.val().message}`;  // create a string with the msg
+      var message = `${snapshot.val().message} <textarea>`;  // create a string with the msg
       $messageHistory.append(message);
-    }, function (errorObject) {
-      console.log("Errors handled: " + errorObject.code);
     });
-  });
+  
+    });
+  });   
 
-});
+    // messageRef.on('child_added', function (snapshot) {
+    //   var message = `${snapshot.val().message} <textarea>`;  // create a string with the msg
+    //   $messageHistory.append(message);
+    // }, function (errorObject) {
+    //   console.log("Errors handled: " + errorObject.code);
+    // });
