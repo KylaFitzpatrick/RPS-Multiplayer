@@ -192,6 +192,7 @@ $(document).ready(function () {
   //   getPlayerChoice(turn);
   // });
   turnRef.on('child_changed', function (snapshot) { // listen for turn changes
+    // database.Ref().on('value', function (snapshot) {
     var turn = snapshot.val();
     console.log(`It's ${turn}`);
     if (turn == 'player1turn' && activePnum == 2) {  // player1 turn if 2 players online
@@ -203,7 +204,7 @@ $(document).ready(function () {
   });
 
   playersRef.on('value', function (snapshot) {   // player 2 makes a choice
-    if (turn == 'player2turn' && activePnum == 2) {   // compute results when player 2's turn and 2 people connected
+    if (turn == 'player1turn' && activePnum == 2) {   // compute results when player 2's turn and 2 people connected
       var player1Name = snapshot.val().player1.name;
       var player2Name = snapshot.val().player2.name;
       var player1Choice = snapshot.val().player1.choice;
@@ -245,7 +246,7 @@ $(document).ready(function () {
         $player2Loses_span.text(player2Loses);
         $playerWait.text(results);
       }
-      else if (player1Choice == 'paper' && player2CHoice == 'paper') {
+      else if (player1Choice == 'paper' && player2Choice == 'paper') {
         results = 'Tie';
         $playerWait.text(results);
       }
