@@ -80,7 +80,7 @@ $(document).ready(function () {
       // });
       // current player
       //check for player1 input matches value in html
-      if (activePnum == 1) { // if 1st player
+      if (activePnum == 1 && activePnum!== 2) { // if 1st player
         messageRef.set({}); // if only one player, clear the chat history in the db
         $messageHistory.empty(); // clear the text
         player1Name = playerName;   // store name in variable 
@@ -100,24 +100,35 @@ $(document).ready(function () {
 
         // wait for player 2
         $playerWait.text('Waiting for player 2');
-        $player1Name.text(player1Name)
-        $player1Choice.text(player1Name)
+        database.ref().on("value", function(snapshot) {
+        if(activePnum === 1 && player1!==null){
+        // playerName = snapshot.val().name
+        console.log("name", snapshot.val().players.player1.name)
+        $player1Name.text(snapshot.val().players.player1.name)
+        $player1Choice.text(snapshot.val().players.player1.name)
         $nameInput.text("")
+        }
+      });
         console.log('Waiting for player 2');
 
 
         turn = 'player2turn';
         turnRef.set({
           turn: turn
-        }); // set the turn 
+        }); // set the turn
 
+        database.ref().on("value", function(snapshot) {
         if (activePnum == 2) {
           $playerWait.text('Waiting for player 2');
+          $player1Name.text(snapshot.val().players.player1.name)
+          $player1Choice.text(snapshot.val().players.player1.name)
 
         }
+      });
       }
-      else if (activePnum == 2 && player2!==null) {
+      else if (activePnum == 2) {
         $playerWait.text('Waiting for player 2'); // if you 2nd player
+        // && player2!==null
         // $player1Name.text(player1Ref.name)
         // $player1Choice.text(player1Ref.name)
         player2Name = playerName;   // Store the current name into a different variable to keep track
@@ -142,9 +153,16 @@ $(document).ready(function () {
    console.log(player1)
         // Inform player
         // if(playerName === player2Name && playerName === player2Name){
-        $playerWait.text('Start the game!');
-        $player2Name.text(player2Name)
-        $player2Choice.text(player2Name)
+          $playerWait.text('Start the game!');
+          database.ref().on("value", function(snapshot) {
+          if(activePnum === 2 && player2!==null){
+            // playerName = snapshot.val().name
+            console.log("name", snapshot.val().players.player2.name)
+            $player2Name.text(snapshot.val().players.player2.name)
+            $player2Choice.text(snapshot.val().players.player2.name)
+            $nameInput.text("")
+            }
+          });
         // $player1Name.text(player1Ref.name)
         // $player1Choice.text(player1Ref.name)
         console.log('start');
@@ -184,7 +202,7 @@ $(document).ready(function () {
     if (turn == 'player1turn' && activePnum == 2) {  // player1 turn if 2 players online
       $player1Choice.on('click', getPlayerChoice(turn)); // listen for player1 click events on the choice btns
     }
-    else if (turn == 'p2turn' && activePnum == 2) { // player2 turn and 2 players online
+    else if (turn == 'player2turn' && activePnum == 2) { // player2 turn and 2 players online
       $player2Choice.on('click', getPlayerChoice(turn)); // player2 click events
     }
   });
@@ -331,20 +349,21 @@ $(document).ready(function () {
           turn: turn
         });
         // set the turn in database
-        // playerChoice.off('click'); // removes the event listener 
+        playerChoice.off('click'); // removes the event listener 
+        $player2Turn.text('Your turn!');
       }
       else if (turn == 'player2turn'){
         player2Choice = playerChoice;
-        player2Ref.set({
-          choice: player2Choice
+        player2Ref.update({
+          choice: player2Choice,
         }); //set the player choice
         turn = 'player1turn';
         turnRef.set({
           turn: turn
         });
-        $player1Turn.text('Your turn!');
-        $player2Turn.text('Your turn!');
-        // playerChoice.off('click');
+        // $player1Turn.text('Your turn!');
+        // $player2Turn.text('Your turn!');
+        playerChoice.off('click');
       }
     });
   }
