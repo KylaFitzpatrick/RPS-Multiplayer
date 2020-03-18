@@ -55,11 +55,12 @@ $(document).ready(function () {
   var $playerWait = $("#waiting-player");
   var $player1Turn = $("#player-turn-one");
   var $player2Turn = $("#player-turn-two");
+  var $start = $("#start-button")
 
 
   //functions
 
-  $("#start-button").on("click", function (event) {
+  $start.on("click", function (event) {
     event.preventDefault();
 
     connectedRef.on('value', function (snapshot) { // is player connected/disconnected
@@ -241,93 +242,11 @@ $(document).ready(function () {
       }
     }
   });
-      // if (player1Choice == 'paper' && player2Choice == 'paper') {
-      //   results = 'It is a tie';
-      //   $playerWait.text(results);
-      // }
-      // if (player1Choice == 'paper' && player2Choice == 'rock') {
-      //   results = `${player1Name} Won!`;
-      //   player2Loses++;
-      //   player1Wins++;
-      //   winsRef.set({
-      //     player1: player1Wins,
-      //     player2: player2Wins
-      //   });
-      //   losesRef.set({
-      //     player1: player1Loses,
-      //     player2: player2Loses
-      //   });
-      //   $player1Wins_span.text(player1Wins);
-      //   $player2Loses_span.text(player2Loses);
-      //   $playerWait.text(results);
-      // }
-      // if (player1Choice == 'paper' && player2Choice == 'scissors') {
-      //   results = `${player2Name} Won!`;
-      //   player1Loses++;
-      //   player2Wins++;
-      //   winsRef.set({
-      //     player1: player1Wins,
-      //     player2: player2Wins
-      //   });
-      //   losesRef.set({
-      //     player1: player1Loses,
-      //     player2: player2Loses
-      //   });
-      //   $player1Loses_span.text(player1Loses);
-      //   $player2Wins_span.text(player2Wins);
-      //   $playerWait.text(results);
-      // }
-      // if (player1Choice == 'scissors' && player2Choice == 'scissors') {
-      //   results = 'It is a tie';
-      //   $playerWait.text(results);
-      // }
-      // if (player1Choice == 'scissors' && player2Choice == 'rock') {
-      //   results = `${player2Name} Won!`;
-      //   player1Loses++;
-      //   player2Wins++;
-      //   winsRef.set({
-      //     player1: player1Wins,
-      //     player2: player2Wins
-      //   });
-      //   losesRef.set({
-      //     player1: player1Loses,
-      //     player2: player2Loses
-      //   });
-      //   $player1Loses_span.text(player1Loses);
-      //   $player2Wins_span.text(player2Wins);
-      //   $playerWait.text(results);
-      // }
-    //   if (player1Choice == 'scissors' && player2Choice == 'paper') {
-    //     results = `${player1Name} Won!`;
-    //     player2Loses++;
-    //     player1Wins++;
-    //     winsRef.set({
-    //       player1: player1Wins,
-    //       player2: player2Wins
-    //     });
-    //     losesRef.set({
-    //       player1: player1Loses,
-    //       player2: player2Loses
-    //     });
-    //     $player1Wins_span.text(player1Wins);
-    //     $player2Loses_span.text(player2Loses);
-    //     $playerWait.text(results);
-    //   }
-    // }
-  // });
-  // });-
-
-
 
   function getPlayerChoice(playerTurn) {
     return function(e) {
       var target = $(e.target);
       var playerChoice = target.attr('data-choice');  // save player choice to db 
-    // $(".choice").on("click", function (event) {
-    //   event.preventDefault();
-    //   alert("choice click")
-    //   playerChoice = $(this).attr("data-choice")
-    //   console.log($(this).attr("data-choice"))
       // get player choice attr from the clicked img
       if (playerTurn === 'player1turn') {
         player1Choice = playerChoice; // store the data-choice attr value in a variable
@@ -370,13 +289,17 @@ $(document).ready(function () {
 
     messageRef.child('message').set({ //adding messages to db
       message: message,
-
+    // messageRef.push({ //adding messages to db
+    //     message: message,
     });
     $messageInput.val('');
   
     messageRef.on('child_added', function (snapshot) {
-      var message = `${snapshot.val().message} <textarea>`;  // create a string with the msg
-      $messageHistory.prepend("<br>" + message);
+      // var message = `${snapshot.val().message}
+      // </textarea>`;  // create a string with the msg
+      var message = `<li id="playerMessage" >${snapshot.val().message}
+      `;
+      $messageHistory.prepend(message);
     });
   
     });
