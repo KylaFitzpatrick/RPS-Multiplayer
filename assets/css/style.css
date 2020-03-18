@@ -154,23 +154,33 @@ img{
     padding:10px;
 }
 #chat-message{
-    margin: 0 auto;
+    /* margin: 0 auto; */
     text-align: center;
+    margin-top: 20px;
+}
+::placeholder{
+    color:blue;
+}
+input[type=text]{
+    color: blue;
+    -webkit-text-fill-color: blue;
 }
 #comment-display{
     width:800px;
     height: 400px;
     margin-top: 20px;
-    margin-right: 0px;
+    /* margin-right: 0px; */
     background-color: white;
-    color: black;
+    color: blue;
     align-items: center;
     margin: auto;
+    border: 4px solid blue; 
     /* padding:0px;
     display: list-item; */
 }
 #playerMessage{
     text-align: left;
+    padding: 3px;
 }
 textarea{
     font-size: 40px;
@@ -178,14 +188,11 @@ textarea{
     /* margin: 0px;
     padding: 0px; */
 }
-/* #chat-message ul{
-    text-align: left;
-    float: left;
-} */
 
 #comment-input{
     width: 800px;
     margin-top: 20px;
+    border: 4px solid blue;
 }
 button{
     font-size: 40px;
