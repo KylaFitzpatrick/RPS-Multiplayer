@@ -56,7 +56,8 @@ $(document).ready(function () {
   var $player1Turn = $("#player-turn-one");
   var $player2Turn = $("#player-turn-two");
   var $start = $("#start-button")
-
+  var $playersChoice = $("#players-choice")
+var $playerName = $("#game-description")
 
   //functions
 
@@ -75,7 +76,7 @@ $(document).ready(function () {
       playerName = $nameInput.val();// get playername
       // current player
       //check for player1 input matches value in html
-      if (activePnum == 1 && activePnum!== 2) { // if 1st player
+      if (activePnum == 1) { // if 1st player
         messageRef.set({}); // if only one player, clear the chat history in the db
         $messageHistory.empty(); // clear the text
         player1Name = playerName;   // store name in variable 
@@ -101,9 +102,13 @@ $(document).ready(function () {
         console.log("name", snapshot.val().players.player1.name)
         $player1Name.text(snapshot.val().players.player1.name)
         $player1Choice.text(snapshot.val().players.player1.name)
-        $nameInput.text("")
+        // $nameInput.text("")
+        // $player2RPS.hide();
+        // $playerName.hide();
         }
       });
+        // $player2RPS.hide();
+        $playerName.hide();
         console.log('Waiting for player 2');
 
 
@@ -153,9 +158,13 @@ $(document).ready(function () {
             $player2Choice.text(snapshot.val().players.player2.name)
             $player1Name.text(snapshot.val().players.player1.name)
             $player1Choice.text(snapshot.val().players.player1.name)
-            $nameInput.empty("")
+            // $nameInput.text("")
+            // $player1RPS.hide()
+            // $playerName.hide();
             }
           });
+          // $player1RPS.hide()
+            $playerName.hide();
         console.log('start');
         turn = 'player1turn';
         turnRef.set({
@@ -180,14 +189,15 @@ $(document).ready(function () {
   //if lose display lose
   // Capture Button Click
   turnRef.on('child_changed', function (snapshot) { // listen for turn changes
-    // database.Ref().on('value', function (snapshot) {
     var playerTurn = snapshot.val();
     console.log(`It's ${playerTurn}`);
     if (playerTurn === 'player1turn' && activePnum === 2) {  // player1 turn if 2 players online
-      $player1RPS.on("click", getPlayerChoice(playerTurn)); // listen for player1 click events on the choice btns
+      // $player1RPS.on("click", getPlayerChoice(playerTurn)); // listen for player1 click events on the choice btns
+      getPlayer1Choice(playerTurn);
     }
     else if (playerTurn === 'player2turn' && activePnum === 2) { // player2 turn and 2 players online
-      $player2RPS.on("click", getPlayerChoice(playerTurn)); // player2 click events
+      // $player2RPS.on("click", getPlayerChoice(playerTurn)); // player2 click events
+      getPlayer2Choice(playerTurn);
     }
   });
 
@@ -242,11 +252,11 @@ $(document).ready(function () {
       }
     }
   });
-
-  function getPlayerChoice(playerTurn) {
-    return function(e) {
+  function getPlayer1Choice(playerTurn) {
+    return $player1RPS.on("click", function(e) {
       var target = $(e.target);
       var playerChoice = target.attr('data-choice');  // save player choice to db 
+      // playerChoice.on("click", function() {
       // get player choice attr from the clicked img
       if (playerTurn === 'player1turn') {
         player1Choice = playerChoice; // store the data-choice attr value in a variable
@@ -261,24 +271,75 @@ $(document).ready(function () {
           turn: turn
         });
         // set the turn in database
-        $player1RPS.off("click");// removes the event listener 
+        // $player1RPS.off("click");// removes the event listener
+        $player1Turn.text("");
         $player2Turn.text('Your turn!');
-      }else if (playerTurn === 'player2turn'){
-        player2Choice = playerChoice;
-        player2Ref.update({
-          choice: player2Choice,
-        }); //set the player choice
-        turn = 'player1turn';
-        turnRef.update({
-          turn: turn
-        });
-        $player2RPS.off();
-        $player1Turn.text('Your turn!');
-        // $player2Turn.text('Your turn!');
       }
-    // });
+    });
+  } function getPlayer2Choice(playerTurn) {
+    return $player2RPS.on("click", function(e) {
+      var target = $(e.target);
+      var playerChoice = target.attr('data-choice');  // save player choice to db 
+      // playerChoice.on("click", function() {
+      // get player choice attr from the clicked img
+    if (playerTurn === 'player2turn'){
+      player2Choice = playerChoice;
+      player2Ref.update({
+        choice: player2Choice,
+      }); //set the player choice
+      turn = 'player1turn';
+      turnRef.update({
+        turn: turn
+      });
+      // $player2RPS.off();
+      $player1Turn.text('Your turn!');
+      $player2Turn.text("");
+      // $player2Turn.text('Your turn!');
     }
-  }
+  // }
+  });
+}
+  // $player2RPS.on("click",getPlayerChoice(playerTurn) {
+  // function getPlayerChoice(playerTurn) {
+  //   return $playersChoice.on("click", function(e) {
+  //     var target = $(e.target);
+  //     var playerChoice = target.attr('data-choice');  // save player choice to db 
+  //     // playerChoice.on("click", function() {
+  //     // get player choice attr from the clicked img
+  //     if (playerTurn === 'player1turn') {
+  //       player1Choice = playerChoice; // store the data-choice attr value in a variable
+  //       // 
+  //       player1Ref.update({
+  //         choice: player1Choice,
+  //       });
+  //       //set the database with the player choice
+  //       turn = 'player2turn'
+  //       // change turn and store the value in a variable
+  //       turnRef.update({
+  //         turn: turn
+  //       });
+  //       // set the turn in database
+  //       // $player1RPS.off("click");// removes the event listener
+  //       $player1Turn.text("");
+  //       $player2Turn.text('Your turn!');
+  //     }else if (playerTurn === 'player2turn'){
+  //       player2Choice = playerChoice;
+  //       player2Ref.update({
+  //         choice: player2Choice,
+  //       }); //set the player choice
+  //       turn = 'player1turn';
+  //       turnRef.update({
+  //         turn: turn
+  //       });
+  //       // $player2RPS.off();
+  //       $player1Turn.text('Your turn!');
+  //       $player2Turn.text("");
+  //       // $player2Turn.text('Your turn!');
+  //     }
+  //   // }
+  //   });
+  // }
+  // }
 
 
   //display message if player submits message

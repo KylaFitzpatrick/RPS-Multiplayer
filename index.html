@@ -1,97 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Chicle|Monoton&display=swap" rel="stylesheet">    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
+    <link href="https://fonts.googleapis.com/css?family=Chicle|Monoton&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
     <title>RPS-Multiplayer</title>
 </head>
+
 <body>
     <header>
         <div class="container">
             <div id="game">
                 <h1 id="rps">Rock Paper Scissors</h1>
-                <!-- <img id="rps-image" src="assets/images/rock-paper-scissors-vector-line-icons.png"> -->
             </div>
         </div>
 
     </header>
-        <section id="game-section">
-            <div class="container">
-                <div id="game-description">
-                    <form role="form">
-                        <div id="waiting-player">Please enter name to start game</div>
-                        <input class="player" type="text" id="name-input" placeholder="Enter player name">
-                    <button id="start-button" >Start!</button>
-                    </form>
-                </div>
-                <div id="score-board">
-                    <div id="player-one-label" class="label">Player 1</div>
-                    <div id="player-two-label" class="label">Player 2</div>
-                    <div id="wins-label">Wins</div>
-                    <span id="player-one-wins">0</span>:<span id="player-two-wins">0</span>
-                    <br>
-                    <div id="losses-label">Losses</div>
-                    <span id="player-one-loss">0</span>:<span id="player-two-loss">0</span>
-                </div>
+    <section id="game-section">
+        <div class="container">
+            <div id="game">
+                <div id="waiting-player">Please enter name to start game</div>
+                <form id="game-description"role="form">
+                    <!-- <div id="waiting-player">Please enter name to start game</div> -->
+                    <input class="player" type="text" id="name-input" placeholder="Enter player name">
+                    <button id="start-button">Start!</button>
+                </form>
+            </div>
+            <div id="score-board">
+                <div id="player-one-label" class="label">Player 1</div>
+                <div id="player-two-label" class="label">Player 2</div>
+                <div id="wins-label">Wins</div>
+                <span id="player-one-wins">0</span>:<span id="player-two-wins">0</span>
+                <br>
+                <div id="losses-label">Losses</div>
+                <span id="player-one-loss">0</span>:<span id="player-two-loss">0</span>
+            </div>
 
-                <div class="result">
-                    <p></p>
+            <div class="result">
+                <p></p>
+            </div>
+            <div id="players-choice">
+                <div id="player-turn-one"></div>
+                <div id="player-one-choice" class="player-choice">Player 1</div>
+                <br>
+                <div id="player-one-choices">
+                    <img class="choice" data-choice="rock" src="assets/images/rock.png"></img>
+                    <img class="choice" data-choice="paper" src="assets/images/paper.png"></img>
+                    <img class="choice" data-choice="scissors" src="assets/images/scissors.png"></img>
                 </div>
-                    <div id="players-choice">
-                        <div id="player-turn-one"></div>
-                        <div id="player-one-choice" class="player-choice">Player 1</div>
-                        <br>
-                        <div id="player-one-choices">
-                            <img class="choice" data-choice="rock" src="assets/images/rock.png"></img>
-                            <img class="choice" data-choice="paper" src="assets/images/paper.png"></img>
-                            <img class="choice" data-choice="scissors" src="assets/images/scissors.png"></img>
-                        </div>
-                        <div id="player-turn-two"></div>
-                        <div id="player-two-choice" class="player-choice">Player 2</div>
-                        <br>
-                        <div id="player-two-choices">
-                            <img class="choice" data-choice="rock" src="assets/images/rock.png"></img>
-                            <img class="choice" data-choice="paper" src="assets/images/paper.png"></img>
-                            <img class="choice" data-choice="scissors" src="assets/images/scissors.png"></img>
-                        </div>
-                    </div>
-                </div>
-                <div id="chat-message">
-                    <form id="message-history">
-                        <!-- <textarea id="comment-display">
-                        </textarea> -->
-                        <ul id="comment-display">
-                        </ul>
-                    </form>
-                    <form id="messages">
-                    <input type="text" class="form-control" id="comment-input" placeholder="Enter Message"></textarea>
-                    <br>
-                    <button class="btn btn-default" id="add-message" type="submit">Submit</button>
-                    </form>
+                <div id="player-turn-two"></div>
+                <div id="player-two-choice" class="player-choice">Player 2</div>
+                <br>
+                <div id="player-two-choices">
+                    <img class="choice" data-choice="rock" src="assets/images/rock.png"></img>
+                    <img class="choice" data-choice="paper" src="assets/images/paper.png"></img>
+                    <img class="choice" data-choice="scissors" src="assets/images/scissors.png"></img>
                 </div>
             </div>
-        </section>
-        <!-- <a href="https://www.vecteezy.com/free-vector/rock-paper-scissors">Rock Paper Scissors Vectors by Vecteezy</a> -->
-        <script type="text/javascript" src="assets/javascript/game.js" charset="UTF-8"></script>
+        </div>
+        <div id="chat-message">
+            <form id="message-history">
+                <!-- <textarea id="comment-display">
+                        </textarea> -->
+                <ul id="comment-display">
+                </ul>
+            </form>
+            <form id="messages">
+                <input type="text" class="form-control" id="comment-input" placeholder="Enter Message"></textarea>
+                <br>
+                <button class="btn btn-default" id="add-message" type="submit">Submit</button>
+            </form>
+        </div>
+        </div>
+    </section>
+    <!-- <a href="https://www.vecteezy.com/free-vector/rock-paper-scissors">Rock Paper Scissors Vectors by Vecteezy</a> -->
+    <script type="text/javascript" src="assets/javascript/game.js" charset="UTF-8"></script>
     <script type='text/javascript' src='assets/javascript/config.js'></script>
-      <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-      <!-- <script
-      src="https://code.jquery.com/jquery-3.4.1.min.js"
-      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-      crossorigin="anonymous"></script> -->
-      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-      <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-database.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-database.js"></script>
 
-    </body>
+</body>
+
 </html>
