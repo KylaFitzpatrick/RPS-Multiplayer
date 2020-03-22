@@ -200,18 +200,19 @@ var $playerName = $("#game-description")
       getPlayer2Choice(playerTurn);
     }
   });
-
+// database.ref().on("value", function (snapshot){
   playersRef.on('value', function (snapshot) {   // player 2 makes a choice
     if (turn === 'player1turn' && activePnum === 2) {   // compute results when player 2's turn and 2 people connected
       var player1Name = snapshot.val().player1.name;
       var player2Name = snapshot.val().player2.name;
       var player1Choice = snapshot.val().player1.choice;
       var player2Choice = snapshot.val().player2.choice;
+      // var player1Loses = snapshot.val().loses.player1;
 
       if (player1Choice == 'rock' && player2Choice == 'rock' || 
       player1Choice == 'scissors' && player2Choice == 'scissors' ||
       player1Choice == 'paper' && player2Choice == 'paper') {
-        results = 'It is a tie';
+        results = `It is a tie`;
         $playerWait.text(results);
       }
       if (player1Choice == 'rock' && player2Choice == 'paper'||
@@ -231,6 +232,8 @@ var $playerName = $("#game-description")
         $player1Loses_span.text(player1Loses);
         $player2Wins_span.text(player2Wins);
         $playerWait.text(results);
+        // player1Choice.remove();
+        // player2Choice.remove();
       }
       if (player1Choice == 'rock' && player2Choice == 'scissors' ||
       player1Choice == 'paper' && player2Choice == 'rock'||
@@ -250,6 +253,8 @@ var $playerName = $("#game-description")
         $player2Loses_span.text(player2Loses);
         $playerWait.text(results);
       }
+      player1Choice.empty();
+        player2Choice.empty();
     }
   });
   function getPlayer1Choice(playerTurn) {
@@ -259,6 +264,7 @@ var $playerName = $("#game-description")
       // playerChoice.on("click", function() {
       // get player choice attr from the clicked img
       if (playerTurn === 'player1turn') {
+        $player1Turn.text('Your turn!');
         player1Choice = playerChoice; // store the data-choice attr value in a variable
         // 
         player1Ref.update({
@@ -271,18 +277,21 @@ var $playerName = $("#game-description")
           turn: turn
         });
         // set the turn in database
-        // $player1RPS.off("click");// removes the event listener
+        $player1RPS.off("click");// removes the event listener
         $player1Turn.text("");
-        $player2Turn.text('Your turn!');
+        // $player2Turn.text('Your turn!');
       }
     });
-  } function getPlayer2Choice(playerTurn) {
+  } 
+  
+  function getPlayer2Choice(playerTurn) {
     return $player2RPS.on("click", function(e) {
       var target = $(e.target);
       var playerChoice = target.attr('data-choice');  // save player choice to db 
       // playerChoice.on("click", function() {
       // get player choice attr from the clicked img
     if (playerTurn === 'player2turn'){
+      $player2Turn.text('Your turn!');
       player2Choice = playerChoice;
       player2Ref.update({
         choice: player2Choice,
@@ -292,16 +301,24 @@ var $playerName = $("#game-description")
         turn: turn
       });
       // $player2RPS.off();
-      $player1Turn.text('Your turn!');
+      player1Choice = ""
+      player1Ref.update({
+        choice: player1Choice,
+      });
+      player2Choice = ""
+      player2Ref.update({
+        choice: player2Choice,
+      });
+      // $player1Turn.text('Your turn!');
       $player2Turn.text("");
       // $player2Turn.text('Your turn!');
     }
   // }
   });
 }
-  // $player2RPS.on("click",getPlayerChoice(playerTurn) {
+  // // $player2RPS.on("click",getPlayerChoice(playerTurn) {
   // function getPlayerChoice(playerTurn) {
-  //   return $playersChoice.on("click", function(e) {
+  //   return function(e) {
   //     var target = $(e.target);
   //     var playerChoice = target.attr('data-choice');  // save player choice to db 
   //     // playerChoice.on("click", function() {
@@ -337,7 +354,7 @@ var $playerName = $("#game-description")
   //       // $player2Turn.text('Your turn!');
   //     }
   //   // }
-  //   });
+  //   // });
   // }
   // }
 
