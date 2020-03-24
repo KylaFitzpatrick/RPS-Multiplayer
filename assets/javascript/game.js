@@ -59,25 +59,29 @@ $(document).ready(function () {
   var $playerName = $("#game-description")
 
   //functions
-
   $start.on("click", function (event) {
     event.preventDefault();
-
+  
     connectedRef.on('value', function (snapshot) { // is player connected/disconnected
       if (snapshot.val()) { // if connected
         connectionsRef.push(true);
         connectionsRef.onDisconnect().remove(); // remove player from the connection when they disconnect
       }
     });
+  
     connectionsRef.on('value', function (snapshot) { // moved player to connection folder
       console.log(`Number of players online ${snapshot.numChildren()}`);
       activePnum = snapshot.numChildren();    // get the number of connections 
       playerName = $nameInput.val();// get playername
+    
+    
       // current player
       //check for player1 input matches value in html
-      if (activePnum == 1) { // if 1st player
+      // function setPlayer1(){
+      if (activePnum === 1) { // if 1st player
         messageRef.set({}); // if only one player, clear the chat history in the db
-        $messageHistory.empty(); // clear the text
+        // $messageHistory.empty();
+        // playerName = $nameInput.val(); // clear the text
         player1Name = playerName;   // store name in variable 
         // create the object
         var player1 = {
@@ -116,17 +120,18 @@ $(document).ready(function () {
           turn: turn
         }); // set the turn
 
-        // database.ref().on("value", function(snapshot) {
-        if (activePnum == 2) {
+        if (activePnum === 2) {
           $playerWait.text('Waiting for player 2');
-          // $player1Name.text(snapshot.val().players.player1.name)
-          // $player1Choice.text(snapshot.val().players.player1.name)
-
         }
-        // });
+        
       }
+    // }
       else if (activePnum == 2) {
-        // $playerWait.text('Waiting for player 2'); // if you 2nd player
+        // function setPlayer2(){
+        // if (activePnum === 2 ) {
+       // if you 2nd player
+
+       playerName = $nameInput.val();
         player2Name = playerName;   // Store the current name into a different variable to keep track
         // Create the object
         var player2 = {
@@ -146,12 +151,11 @@ $(document).ready(function () {
         winsRef.set(wins);
         losesRef.set(loses);
         // sync object
-        console.log(player1)
+        // console.log(player1)
         // Inform player
         $playerWait.text('Start the game!');
         database.ref().on("value", function (snapshot) {
           if (activePnum == 2 && player2 !== null) {
-            // playerName = snapshot.val().name
             console.log("name", snapshot.val().players.player2.name)
             $player2Name.text(snapshot.val().players.player2.name)
             $player2Choice.text(snapshot.val().players.player2.name)
@@ -171,6 +175,7 @@ $(document).ready(function () {
         });
 
       }
+    // }
 
     });
 
@@ -180,6 +185,7 @@ $(document).ready(function () {
     });
   });
 
+ 
 
 
   turnRef.on('child_changed', function (snapshot) { // listen for turn changes
@@ -196,11 +202,12 @@ $(document).ready(function () {
   });
 
   playersRef.on('value', function (snapshot) {   // player 2 makes a choice
-    if (turn === 'player1turn') {   // compute results when player 1's turn and 2 people connected
-      var player1Name = snapshot.val().player1.name;
-      var player2Name = snapshot.val().player2.name;
-      var player1Choice = snapshot.val().player1.choice;
-      var player2Choice = snapshot.val().player2.choice;
+    // if (turn === 'player1turn') {   // compute results when player 1's turn and 2 people connected
+    var player1Name = snapshot.val().player1.name;
+    var player2Name = snapshot.val().player2.name;
+    var player1Choice = snapshot.val().player1.choice;
+    var player2Choice = snapshot.val().player2.choice;
+    if (player1Choice !== null && player2Choice !== null) {
 
       if (player1Choice == 'rock' && player2Choice == 'rock' ||
         player1Choice == 'scissors' && player2Choice == 'scissors' ||
@@ -272,7 +279,15 @@ $(document).ready(function () {
       }
     });
   }
+  // function checkPlayerChoice(){
+  //    var playerChoice = false;
 
+  //    if(choice === "" && activePnum === 2){
+  //      playerChoice;
+  //    }else{
+  //      playerChoice = true;
+  //    }
+  // }
   function getPlayer2Choice(playerTurn) {
     return $player2RPS.on("click", function (e) {
       var target = $(e.target);
@@ -311,21 +326,14 @@ $(document).ready(function () {
     event.preventDefault();
     message = $("#comment-input").val().trim();
 
-    // messageRef.child('message').set({ //adding messages to db
-    //   message: message,
       messageRef.push({ //adding messages to db
           message: message,
     });
     $messageInput.val('');
 
-    // messageRef.endAt().limitToLast(1).on('child_added', function (snapshot) {
-    //  // create a string with the msg
-    //   var chat = `<li id="playerMessage" >${snapshot.val().message}
-    //   `;
-    //   $messageHistory.prepend(chat);
-    // });
 
-  });   
+  });
+   
 messageRef.endAt().limitToLast(1).on('child_added', function (snapshot) {
   // create a string with the msg
    var chat = `<li id="playerMessage" >${snapshot.val().message}
